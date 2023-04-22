@@ -12,14 +12,17 @@ import axiosInstance from '../axiosInstance';
 
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
-import LeagueCard from './LeagueCard';
-import LeagueSeasonCard from './LeagueSeasonCard';
-import TeamCard from './TeamCard';
-import PlayerCard from './PlayerCard';
-import CareerTable from './CareerTable';
+import LeagueCard from '../components/LeagueCard';
+import LeagueSeasonCard from '../components/LeagueSeasonCard';
+import TeamCard from '../components/TeamCard';
+import PlayerCard from '../components/PlayerCard';
+import CareerTable from '../components/CareerTable';
 
-import colors from './colors';
-import { stringify } from 'querystring';
+import colors from '../components/colors';
+
+import Navbar from '../components/Navbar';
+import CssBaseline from '@mui/material/CssBaseline';
+import LoadingAnimation from '../components/LoadingAnimation';
 
 const TIMCHWAISCREEN = () => {
   const [showFilters, setShowFilters] = useState(true);
@@ -55,7 +58,7 @@ const TIMCHWAISCREEN = () => {
     console.log('Fetching leagues');
     try {
         const response = await axiosInstance.get('/api/leagues/');
-        console.log(JSON.stringify(response.data));
+        console.log(`Leagues:\n${JSON.stringify(response.data)}`);
         setLeagues(response.data);
     } catch (error) {
         console.error('Error fetching leagues:', error);
@@ -70,7 +73,7 @@ const TIMCHWAISCREEN = () => {
             leagueIds: selectedLeagues.join(','),
           },
         });
-        console.log(JSON.stringify(response.data));
+        console.log(`League Seasons:\n${JSON.stringify(response.data)}`);
         setLeagueSeasons(response.data);
       } catch (error) {
         console.error('Error fetching league seasons:', error);
@@ -87,7 +90,7 @@ const TIMCHWAISCREEN = () => {
             leagueSeasonIds: selectedLeagueSeasons.join(','),
           },
         });
-        console.log(JSON.stringify(response.data));
+        console.log(`Teams:\n${JSON.stringify(response.data)}`);
         setTeams(response.data);
       } catch (error) {
         console.error('Error fetching teams:', error);
@@ -296,211 +299,223 @@ const getStylesBasedOnMessageState = (messageState) => {
       <Navbar />
       <Container maxWidth="lg">
         <Box sx={{ flexGrow: 1, p: 1 }}>
-        {selectedTeams.length > 0 && (
-            <Container className='player'>
-            <Box
-                sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 2,
-                }}
-            >
-                <Button
-                variant="contained"
-                color="primary"
-                onClick={handleRandomPlayerButtonClick}
-                sx={{mr: 3}}
-                >
-                Generate Player
-                </Button>
-                <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleFilterButtonClick}
-                >
-                {showFilters ? 'Hide Filters' : 'Show Filters'}
-                </Button>
-            </Box>
-
-            {career && showCareer && (
-                <CareerTable careers={career} />
-            )}
-
-            {player && showPlayer && (
+            {selectedTeams.length > 0 && (
+                <Container className='player'>
                 <Box
-                sx={{
+                    sx={{
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                }}
+                    marginTop: 2,
+                    }}
                 >
-                <PlayerCard player={player} />
-                </Box>
-            )}
-            </Container>
-        )}
-
-        {player && career && showCareer && (
-            <Container>
-            <Box sx={{ marginTop: 2 }} />
-            <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <TextField
-                value={inputValue}
-                onChange={handleInputChange}
-                label="Enter player name"
-                variant="outlined"
-                sx={{ marginRight: 2 }}
-                />
-                <Button variant="contained" color="primary" onClick={handleGuess} sx={{ marginRight: 1 }}>
-                Guess
-                </Button>
-                <Button variant="contained" color="secondary" onClick={handleGiveUp}>
-                Give Up
-                </Button>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                {message && (
-                <Typography variant="body1" sx={{ marginTop: 2 }}>
-                    {message}
-                </Typography>
-                )}
-                {guessCount > 0 && (
-                <Typography variant="body1" sx={{ marginTop: 1 }}>
-                    Number of guesses: {guessCount}
-                </Typography>
-                )}
-            </Box>
-            <Container sx={{
-                    ...getStylesBasedOnMessageState(messageState)
-                }}>
-                <Dialog open={openDialog} onClose={handleCloseDialog}>
-                <DialogTitle>Result</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>{message}</DialogContentText>
-                    {guessCount > 0 && (
-                    <Typography
-                        variant="body1"
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleRandomPlayerButtonClick}
+                    sx={{mr: 3}}
                     >
+                    Generate Player
+                    </Button>
+                    <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleFilterButtonClick}
+                    >
+                    {showFilters ? 'Hide Filters' : 'Show Filters'}
+                    </Button>
+                </Box>
+
+                {career && showCareer && (
+                    <CareerTable careers={career} />
+                )}
+
+                {player && showPlayer && (
+                    <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                    >
+                    <PlayerCard player={player} />
+                    </Box>
+                )}
+                </Container>
+            )}
+
+            {player && career && showCareer && (
+                <Container>
+                <Box sx={{ marginTop: 2 }} />
+                <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <TextField
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    label="Enter player name"
+                    variant="outlined"
+                    sx={{ marginRight: 2 }}
+                    />
+                    <Button variant="contained" color="primary" onClick={handleGuess} sx={{ marginRight: 1 }}>
+                    Guess
+                    </Button>
+                    <Button variant="contained" color="secondary" onClick={handleGiveUp}>
+                    Give Up
+                    </Button>
+                </Box>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                    {message && (
+                    <Typography variant="body1" sx={{ marginTop: 2 }}>
+                        {message}
+                    </Typography>
+                    )}
+                    {guessCount > 0 && (
+                    <Typography variant="body1" sx={{ marginTop: 1 }}>
                         Number of guesses: {guessCount}
                     </Typography>
                     )}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog} color="primary">
-                    Close
+                </Box>
+                <Container sx={{
+                        ...getStylesBasedOnMessageState(messageState)
+                    }}>
+                    <Dialog open={openDialog} onClose={handleCloseDialog}>
+                    <DialogTitle>Result</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>{message}</DialogContentText>
+                        {guessCount > 0 && (
+                        <Typography
+                            variant="body1"
+                        >
+                            Number of guesses: {guessCount}
+                        </Typography>
+                        )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseDialog} color="primary">
+                        Close
+                        </Button>
+                    </DialogActions>
+                    </Dialog>
+                </Container>
+                </Container>
+            )}
+
+            {leagues.length > 0 && showLeagues && showFilters && (
+                <Container className='leagues' maxWidth="md">
+                <Box sx={{ marginTop: 2 }} />
+                <Typography variant="h4" component="h1" gutterBottom align="center">
+                    Leagues
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2, marginTop: 2 }}>
+                    <Typography variant='h6' paddingRight='10px'>
+                    {selectedLeagues.length} selected
+                    </Typography>
+                    <FormControlLabel
+                    control={<Checkbox checked={selectAllLeagues} onChange={handleSelectAllLeagues} />}
+                    label="Select All"
+                    />
+                    <Button variant="contained" color="primary" onClick={toggleLeaguesCollapse}>
+                    {showLeagues ? 'Collapse' : 'Expand'}
                     </Button>
-                </DialogActions>
-                </Dialog>
-            </Container>
-            </Container>
-        )}
-
-        {leagues.length > 0 && showFilters && (
-            <Container className='leagues' maxWidth="md">
-            <Box sx={{ marginTop: 2 }} />
-            <Typography variant="h4" component="h1" gutterBottom align="center">
-                Leagues
-            </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2, marginTop: 2 }}>
-                <Typography variant='h6' paddingRight='10px'>
-                {selectedLeagues.length} selected
-                </Typography>
-                <FormControlLabel
-                control={<Checkbox checked={selectAllLeagues} onChange={handleSelectAllLeagues} />}
-                label="Select All"
-                />
-                <Button variant="contained" color="primary" onClick={toggleLeaguesCollapse}>
-                {showLeagues ? 'Collapse' : 'Expand'}
-                </Button>
-            </Box>
-            {showLeagues && (
-                <Grid container spacing={2} justifyContent="center">
-                {leagues.map((league) => (
-                    <Grid item xs={12} sm={6} key={league.id}>
-                    <LeagueCard league={league} onLeagueClick={onLeagueClick} isSelected={selectedLeagues.includes(league.id)} />
+                </Box>
+                {showLeagues && (
+                    <Grid container spacing={2} justifyContent="center">
+                    {leagues.map((league) => (
+                        <Grid item xs={12} sm={6} key={league.id}>
+                        <LeagueCard league={league} onLeagueClick={onLeagueClick} isSelected={selectedLeagues.includes(league.id)} />
+                        </Grid>
+                    ))}
                     </Grid>
-                ))}
-                </Grid>
+                )}
+                </Container>
             )}
-            </Container>
-        )}
-        
-        {leagueSeasons.length > 0 && showFilters && (
-            <Container className='league_seasons' maxWidth='md'>
-            <Typography variant="h4" component="h1" gutterBottom align="center">
-                League Seasons
-            </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
-                <Typography variant='h6' paddingRight='10px'>
-                    {selectedLeagueSeasons.length} selected
+
+            {leagues === [] && (
+                <LoadingAnimation />
+            )}
+            
+            {leagueSeasons.length > 0 && showFilters && (
+                <Container className='league_seasons' maxWidth='md'>
+                <Typography variant="h4" component="h1" gutterBottom align="center">
+                    League Seasons
                 </Typography>
-                <FormControlLabel
-                control={
-                    <Checkbox
-                    checked={selectAllLeagueSeasons}
-                    onChange={handleSelectAllLeagueSeasons}
-                    />
-                }
-                label="Select All"
-                />
-                <Button variant="contained" color="primary" onClick={toggleLeagueSeasonsCollapse}>
-                {showLeagueSeasons ? 'Collapse' : 'Expand'}
-                </Button>
-            </Box>
-            {showLeagueSeasons && (
-                <Grid container spacing={2} justifyContent="center">
-                {leagueSeasons.map((leagueSeason) => (
-                    <Grid item xs={12} sm={6} key={leagueSeason.id}>
-                        <LeagueSeasonCard
-                            leagueSeason={leagueSeason}
-                            onLeagueSeasonClick={onLeagueSeasonClick}
-                            isSelected={selectedLeagueSeasons.includes(leagueSeason.id)}
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+                    <Typography variant='h6' paddingRight='10px'>
+                        {selectedLeagueSeasons.length} selected
+                    </Typography>
+                    <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={selectAllLeagueSeasons}
+                        onChange={handleSelectAllLeagueSeasons}
                         />
+                    }
+                    label="Select All"
+                    />
+                    <Button variant="contained" color="primary" onClick={toggleLeagueSeasonsCollapse}>
+                    {showLeagueSeasons ? 'Collapse' : 'Expand'}
+                    </Button>
+                </Box>
+                {showLeagueSeasons && (
+                    <Grid container spacing={2} justifyContent="center">
+                    {leagueSeasons.map((leagueSeason) => (
+                        <Grid item xs={12} sm={6} key={leagueSeason.id}>
+                            <LeagueSeasonCard
+                                leagueSeason={leagueSeason}
+                                onLeagueSeasonClick={onLeagueSeasonClick}
+                                isSelected={selectedLeagueSeasons.includes(leagueSeason.id)}
+                            />
+                        </Grid>
+                    ))}
                     </Grid>
-                ))}
-                </Grid>
+                )}
+                </Container>
             )}
-            </Container>
-        )}
 
-        {teams.length > 0 && showFilters && (
-            <Container className='teams' maxWidth='md'>
-            <Typography variant="h4" component="h1" gutterBottom align="center">
-                Teams
-            </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Typography variant='h6' paddingRight='10px'>
-                {selectedTeams.length} selected
-                </Typography>
-                <FormControlLabel
-                control={
-                    <Checkbox
-                    checked={selectAllTeams}
-                    onChange={handleSelectAllTeams}
-                    />
-                }
-                label="Select All"
-                />
-                <Button variant="contained" color="primary" onClick={toggleTeamsCollapse}>
-                {showTeams ? 'Collapse' : 'Expand'}
-                </Button>
-            </Box>
-            {showTeams && (
-                <Grid container spacing={2} justifyContent="center">
-                {teams.map((team) => (
-                    <Grid item xs={12} sm={4} md={3} key={team.id}>
-                    <TeamCard
-                        team={team}
-                        onTeamClick={onTeamClick}
-                        isSelected={selectedTeams.includes(team.id)}
-                    />
-                    </Grid>
-                ))}
-                </Grid>
+            {leagueSeasons === [] && leagues !== [] && (
+                <LoadingAnimation />
             )}
-            </Container>
-        )}
+
+            {teams.length > 0 && showFilters && (
+                <Container className='teams' maxWidth='md'>
+                <Typography variant="h4" component="h1" gutterBottom align="center">
+                    Teams
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Typography variant='h6' paddingRight='10px'>
+                    {selectedTeams.length} selected
+                    </Typography>
+                    <FormControlLabel
+                    control={
+                        <Checkbox
+                        checked={selectAllTeams}
+                        onChange={handleSelectAllTeams}
+                        />
+                    }
+                    label="Select All"
+                    />
+                    <Button variant="contained" color="primary" onClick={toggleTeamsCollapse}>
+                    {showTeams ? 'Collapse' : 'Expand'}
+                    </Button>
+                </Box>
+                {showTeams && (
+                    <Grid container spacing={2} justifyContent="center">
+                    {teams.map((team) => (
+                        <Grid item xs={12} sm={4} md={3} key={team.id}>
+                        <TeamCard
+                            team={team}
+                            onTeamClick={onTeamClick}
+                            isSelected={selectedTeams.includes(team.id)}
+                        />
+                        </Grid>
+                    ))}
+                    </Grid>
+                )}
+                </Container>
+            )}
+
+            {teams === [] && leagueSeasons !== [] && leagues !== [] && (
+                <LoadingAnimation />
+            )}
         </Box>
       </Container>
     </div>
