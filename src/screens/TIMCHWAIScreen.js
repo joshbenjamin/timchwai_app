@@ -58,6 +58,10 @@ const TIMCHWAISCREEN = () => {
     console.log('Fetching leagues');
     try {
         const response = await axiosInstance.get('/api/leagues/');
+        if (response.status !== 200){
+            console.error('Error');
+            console.log(response.statusText);
+        }
         console.log(`Leagues:\n${JSON.stringify(response.data)}`);
         setLeagues(response.data);
     } catch (error) {
