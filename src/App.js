@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Home from './screens/Home';
 import PlayerScreen from './screens/PlayerScreen';
+import TIMCHWAISCREEN from './screens/TIMCHWAIScreen';
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
         <Routes>
           <Route index path="/" element={<Home />} />
           <Route path="/player/:playerId" element={<PlayerScreen />} />
+          <Route path="/timchwai/" element={<TIMCHWAISCREEN />} />
+          {/* <Route path='/timchwai' */}
         </Routes>
       </Router>
     </div>

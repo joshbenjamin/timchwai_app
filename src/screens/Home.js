@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Content from '../components/Content';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
+import { Typography } from '@mui/material';
 
 const Home = () => {
   return (
@@ -11,7 +12,9 @@ const Home = () => {
       <CssBaseline />
       <Navbar />
       <Container maxWidth="lg">
-        <Content />
+        <Typography>
+          Tester
+        </Typography>
       </Container>
     </div>
   );

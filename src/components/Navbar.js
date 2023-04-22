@@ -11,7 +11,7 @@ const Navbar = () => {
     <AppBar position="static">
       <Toolbar>
         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to="/timchwai/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <Typography variant="h4" component="div">
               TIMCHWAI
             </Typography>
