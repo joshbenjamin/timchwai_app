@@ -47,6 +47,7 @@ const TIMCHWAISCREEN = () => {
   const [showPlayer, setShowPlayer] = useState(false);
   const [career, setCareer] = useState(null);
   const [showCareer, setShowCareer] = useState(true);
+  const [loadingPlayer, setLoadingPlayer] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
@@ -55,13 +56,13 @@ const TIMCHWAISCREEN = () => {
   const [messageState, setMessageState] = useState('info');
 
   const fetchLeagues = async () => {
-    console.log('Fetching leagues');
+    console.log('Fetching leagues for TIMCHWAI');
     try {
         const response = await axiosInstance.get('/api/leagues/');
         if (response.status !== 200){
             console.error('Error');
-            console.log(response.statusText);
         }
+        console.log(response);
         console.log(`Leagues:\n${JSON.stringify(response.data)}`);
         setLeagues(response.data);
     } catch (error) {
@@ -216,6 +217,14 @@ const TIMCHWAISCREEN = () => {
   // Player
 
   const handleRandomPlayerButtonClick = async () => {
+    setPlayer({});
+    setCareer({});
+    setShowPlayer(false);
+    setShowCareer(false);
+    setLoadingPlayer(true);
+    setInputValue('');
+    setMessage('');
+
     try {
       const response = await axiosInstance.get('/api/player_in_team_seasons', {
           params: {
@@ -236,6 +245,7 @@ const TIMCHWAISCREEN = () => {
         setShowCareer(true);
         setShowPlayer(false);
         setShowFilters(false);
+        setLoadingPlayer(false);
       } else {
         console.error(`Response was not OK`)
       }
@@ -329,6 +339,10 @@ const getStylesBasedOnMessageState = (messageState) => {
                     {showFilters ? 'Hide Filters' : 'Show Filters'}
                     </Button>
                 </Box>
+                
+                {loadingPlayer && (
+                    <LoadingAnimation />
+                )}
 
                 {career && showCareer && (
                     <CareerTable careers={career} />
