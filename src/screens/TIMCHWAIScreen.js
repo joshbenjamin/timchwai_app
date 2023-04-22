@@ -23,9 +23,14 @@ import colors from '../components/colors';
 import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation';
+import IconButton from '@mui/material/IconButton';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import Collapse from '@mui/material/Collapse';
+
 
 const TIMCHWAISCREEN = () => {
   const [showFilters, setShowFilters] = useState(true);
+  const [showHint, setShowHint] = useState(false);
 
   const [leagues, setLeagues] = useState([]);
   const [selectedLeagues, setSelectedLeagues] = useState([]);
@@ -121,6 +126,18 @@ const TIMCHWAISCREEN = () => {
       fetchLeagueSeasons(selectedLeagues);
     }
   }, [selectedLeagues, fetchLeagueSeasons]);
+
+  useEffect(() => {
+    let timeout;
+    if (showHint) {
+      timeout = setTimeout(() => {
+        setShowHint(false);
+      }, 2000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [showHint]);
 
   // Select
 
@@ -316,36 +333,37 @@ const getStylesBasedOnMessageState = (messageState) => {
             {selectedTeams.length > 0 && (
                 <Container className='player'>
                 <Box
-                    sx={{
+                  sx={{
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     marginTop: 2,
-                    }}
+                    position: 'sticky',
+                    top: 0,
+                    background: 'white',
+                    zIndex: 1000,
+                  }}
                 >
-                    <Button
+                  <Button
                     variant="contained"
                     color="primary"
                     onClick={handleRandomPlayerButtonClick}
-                    sx={{mr: 3}}
-                    >
+                    sx={{ mr: 3 }}
+                  >
                     Generate Player
-                    </Button>
-                    <Button
+                  </Button>
+                  <Button
                     variant="contained"
                     color="secondary"
                     onClick={handleFilterButtonClick}
-                    >
+                  >
                     {showFilters ? 'Hide Filters' : 'Show Filters'}
-                    </Button>
+                  </Button>
                 </Box>
+
                 
                 {loadingPlayer && (
                     <LoadingAnimation />
-                )}
-
-                {career && showCareer && (
-                    <CareerTable careers={career} />
                 )}
 
                 {player && showPlayer && (
@@ -356,7 +374,7 @@ const getStylesBasedOnMessageState = (messageState) => {
                         alignItems: 'center',
                     }}
                     >
-                    <PlayerCard player={player} />
+                      <PlayerCard player={player} />
                     </Box>
                 )}
                 </Container>
@@ -365,6 +383,11 @@ const getStylesBasedOnMessageState = (messageState) => {
             {player && career && showCareer && (
                 <Container>
                 <Box sx={{ marginTop: 2 }} />
+                <Collapse in={showHint}>
+                  <Typography variant="body1" sx={{ marginBottom: 1 }}>
+                    Positions: {player.positions.join(', ')}
+                  </Typography>
+                </Collapse>
                 <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <TextField
                     value={inputValue}
@@ -373,12 +396,17 @@ const getStylesBasedOnMessageState = (messageState) => {
                     variant="outlined"
                     sx={{ marginRight: 2 }}
                     />
-                    <Button variant="contained" color="primary" onClick={handleGuess} sx={{ marginRight: 1 }}>
+                    <Button variant="contained" color="primary" onClick={handleGuess} sx={{ marginRight: 2 }}>
                     Guess
                     </Button>
                     <Button variant="contained" color="secondary" onClick={handleGiveUp}>
                     Give Up
                     </Button>
+                    <IconButton
+                      onClick={() => setShowHint(!showHint)}
+                    >
+                      <LightbulbIcon />
+                    </IconButton>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     {message && (
@@ -447,7 +475,7 @@ const getStylesBasedOnMessageState = (messageState) => {
                 </Container>
             )}
 
-            {leagues === [] && (
+            {leagues.length === 0 && (
                 <LoadingAnimation />
             )}
             
@@ -489,7 +517,7 @@ const getStylesBasedOnMessageState = (messageState) => {
                 </Container>
             )}
 
-            {leagueSeasons === [] && leagues !== [] && (
+            {leagueSeasons.length === 0 && selectedLeagues.length > 0 && (
                 <LoadingAnimation />
             )}
 
@@ -531,8 +559,12 @@ const getStylesBasedOnMessageState = (messageState) => {
                 </Container>
             )}
 
-            {teams === [] && leagueSeasons !== [] && leagues !== [] && (
+            {teams.length === 0 && selectedLeagueSeasons.length > 0 && selectedLeagues.length > 0 && (
                 <LoadingAnimation />
+            )}
+
+            {career && showCareer && (
+              <CareerTable careers={career} />
             )}
         </Box>
       </Container>

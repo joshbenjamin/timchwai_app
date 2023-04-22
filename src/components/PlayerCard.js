@@ -9,11 +9,24 @@ import Link from '@mui/material/Link';
 import { Button, CardActions } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const PlayerCard = ({ player }) => {
+import IconButton from '@mui/material/IconButton';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+
+const PlayerCard = ({ player, playerScreen = false }) => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     navigate(`/player/${player.id}`);
+  };
+
+  const copyToClipboard = async () => {
+    const url = `${window.location.origin}/player/${player.id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      alert('Link copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
   };
 
   return (
@@ -41,13 +54,23 @@ const PlayerCard = ({ player }) => {
         </CardContent>
       </CardActionArea>
       <CardActions sx={{ display: 'flex', justifyContent: 'center', paddingBottom: 2 }}>
-        <Button
-          onClick={handleButtonClick}
-          variant="contained"
-          color="primary"
+        {!playerScreen && (
+          <Button
+            onClick={handleButtonClick}
+            variant="contained"
+            color="primary"
+          >
+            View Player Page
+          </Button>
+        )}
+        <IconButton
+          onClick={copyToClipboard}
+          edge="end"
+          color="inherit"
+          aria-label="copy"
         >
-          View Player
-        </Button>
+          <FileCopyOutlinedIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );

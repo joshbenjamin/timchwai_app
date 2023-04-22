@@ -11,6 +11,9 @@ import PlayerCard from '../components/PlayerCard';
 import CareerTable from '../components/CareerTable';
 import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
+import LoadingAnimation from '../components/LoadingAnimation';
+import Link from '@mui/material/Link';
+
 
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
@@ -80,7 +83,7 @@ const PlayerScreen = () => {
   };
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    setInputValue(e.target.value.trim());
   };
   
   const getStylesBasedOnMessageState = (messageState) => {
@@ -98,7 +101,7 @@ const PlayerScreen = () => {
   };
 
   if (!player) {
-    return <Typography>Loading...</Typography>;
+    return <LoadingAnimation />;
   }
 
   return (
@@ -136,6 +139,21 @@ const PlayerScreen = () => {
                 </Typography>
                 )}
             </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+              {!showPlayer && (
+                <Link
+                  underline="hover"
+                  sx={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    setShowPlayer(true);
+                  }}
+                >
+                  <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
+                    Show Player
+                  </Typography>
+                </Link>
+              )}
+            </Box>
             <Container sx={{
                     ...getStylesBasedOnMessageState(messageState)
                 }}>
@@ -160,9 +178,6 @@ const PlayerScreen = () => {
             </Container>
             </Container>
         )}
-            <Typography variant="h4" component="h1" gutterBottom align="center">
-                Player
-            </Typography>
             {showPlayer && (
               <Box
                 sx={{
@@ -172,10 +187,19 @@ const PlayerScreen = () => {
                   marginBottom: 2,
                 }}
               >
-                <PlayerCard player={player} />
+                <PlayerCard player={player} playerScreen={true} />
               </Box>
             )}
-            <CareerTable careers={career} />
+            <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginBottom: 2,
+                }}
+              >
+                <CareerTable careers={career} />
+              </Box>
         </Container>    
     </div>
   );
