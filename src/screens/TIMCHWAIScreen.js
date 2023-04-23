@@ -548,12 +548,12 @@ const getStylesBasedOnMessageState = (messageState) => {
                 {showTeams && (
                     <Grid container spacing={2} justifyContent="center">
                     {teams.map((team) => (
-                        <Grid item xs={12} sm={4} md={3} key={team.id}>
-                        <TeamCard
-                            team={team}
-                            onTeamClick={onTeamClick}
-                            isSelected={selectedTeams.includes(team.id)}
-                        />
+                        <Grid item xs={4} sm={4} md={3} lg={3} key={team.id}>
+                          <TeamCard
+                              team={team}
+                              onTeamClick={onTeamClick}
+                              isSelected={selectedTeams.includes(team.id)}
+                          />
                         </Grid>
                     ))}
                     </Grid>

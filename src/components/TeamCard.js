@@ -13,7 +13,7 @@ const TeamCard = ({ team, onTeamClick, isSelected }) => {
     <Card
       sx={{
         width: '100%',
-        paddingBottom: '100%', // Maintain aspect ratio 1:1
+        paddingBottom: '75%', // Maintain aspect ratio 4:3
         position: 'relative',
         bgcolor: isSelected ? 'grey.300' : 'background.paper',
       }}
@@ -35,8 +35,8 @@ const TeamCard = ({ team, onTeamClick, isSelected }) => {
           component="img"
           sx={{
             objectFit: 'contain',
-            width: '80%',
-            height: '80%',
+            width: '90%',
+            height: '90%',
           }}
           alt={team.name}
           image={team.image}
