@@ -123,6 +123,7 @@ const PlayerScreen = () => {
                     onChange={handleInputChange}
                     label="Enter player name"
                     variant="outlined"
+                    fullWidth
                   />
                 </Grid>
                 <Grid item xs={2}>

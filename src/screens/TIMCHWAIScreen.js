@@ -373,6 +373,7 @@ const handleCloseDialog = () => {
                         onChange={handleInputChange}
                         label="Enter player name"
                         variant="outlined"
+                        fullWidth
                       />
                     </Grid>
                     <Grid item xs={2}>
@@ -384,7 +385,7 @@ const handleCloseDialog = () => {
                     </Grid>
                   </Grid>
                 </Box>
-                <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+                <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2, marginBottom: 2 }}>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
                       <Button variant="contained" color="primary" onClick={handleGuess} sx={{ width: '100%', height: '40px' }}>
@@ -448,7 +449,7 @@ const handleCloseDialog = () => {
                     <Button variant="contained" color="primary" onClick={toggleLeaguesCollapse} size="small" sx={{ 
                       fontSize: { xs: '0.8rem', sm: '0.9rem' } 
                     }}>
-                      {showTeams ? 'Collapse' : 'Expand'}
+                      {showLeagues ? 'Collapse' : 'Expand'}
                     </Button>
                 </Box>
                 {showLeagues && (
@@ -489,7 +490,7 @@ const handleCloseDialog = () => {
                     <Button variant="contained" color="primary" onClick={toggleLeagueSeasonsCollapse} size="small" sx={{ 
                       fontSize: { xs: '0.8rem', sm: '0.9rem' } 
                     }}>
-                      {showTeams ? 'Collapse' : 'Expand'}
+                      {showLeagueSeasons ? 'Collapse' : 'Expand'}
                     </Button>
                 </Box>
                 {showLeagueSeasons && (
