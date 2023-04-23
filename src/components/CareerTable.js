@@ -27,7 +27,7 @@ const CareerTable = ({ careers }) => {
             <TableCell>Team</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>Years</TableCell>
-            <TableCell>Appearances</TableCell>
+            <TableCell>Apps</TableCell>
             <TableCell>Goals</TableCell>
           </TableRow>
         </TableHead>

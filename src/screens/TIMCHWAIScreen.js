@@ -132,7 +132,7 @@ const TIMCHWAISCREEN = () => {
     if (showHint) {
       timeout = setTimeout(() => {
         setShowHint(false);
-      }, 2000);
+      }, 1000);
     }
     return () => {
       clearTimeout(timeout);
@@ -329,54 +329,58 @@ const getStylesBasedOnMessageState = (messageState) => {
       <CssBaseline />
       <Navbar />
       <Container maxWidth="lg">
+      {selectedTeams.length > 0 && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'fixed',
+            top: 64,
+            left: 0,
+            right: 0,
+            background: 'white',
+            zIndex: 10,
+            paddingY: 1,
+            marginBottom: 2,
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleRandomPlayerButtonClick}
+            sx={{ mr: 3 }}
+          >
+            Generate Player
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleFilterButtonClick}
+            sx={{ minWidth: 'max-content' }}
+          >
+            {showFilters ? 'Hide Filters' : 'Show Filters'}
+          </Button>
+        </Box>
+        )}
         <Box sx={{ flexGrow: 1, p: 1 }}>
             {selectedTeams.length > 0 && (
-                <Container className='player'>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 2,
-                    position: 'sticky',
-                    top: 0,
-                    background: 'white',
-                    zIndex: 1000,
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleRandomPlayerButtonClick}
-                    sx={{ mr: 3 }}
-                  >
-                    Generate Player
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleFilterButtonClick}
-                  >
-                    {showFilters ? 'Hide Filters' : 'Show Filters'}
-                  </Button>
-                </Box>
+                <Container className='player'>                
+                  {loadingPlayer && (
+                      <LoadingAnimation />
+                  )}
 
-                
-                {loadingPlayer && (
-                    <LoadingAnimation />
-                )}
-
-                {player && showPlayer && (
-                    <Box
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                    >
-                      <PlayerCard player={player} />
-                    </Box>
-                )}
+                  {player && showPlayer && (
+                      <Box
+                      sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                      }}
+                      >
+                        <PlayerCard player={player} />
+                      </Box>
+                  )}
                 </Container>
             )}
 
@@ -385,14 +389,14 @@ const getStylesBasedOnMessageState = (messageState) => {
                 <Box sx={{ marginTop: 2 }} />
                 <Collapse in={showHint}>
                   <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                    Positions: {player.positions.join(', ')}
+                    Position(s): {player.positions.join(', ')}
                   </Typography>
                 </Collapse>
                 <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <TextField
                     value={inputValue}
                     onChange={handleInputChange}
-                    label="Enter player name"
+                    label="Enter name"
                     variant="outlined"
                     sx={{ marginRight: 2 }}
                     />

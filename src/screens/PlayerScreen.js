@@ -116,7 +116,7 @@ const PlayerScreen = () => {
                 <TextField
                 value={inputValue}
                 onChange={handleInputChange}
-                label="Enter player name"
+                label="Enter name"
                 variant="outlined"
                 sx={{ marginRight: 2 }}
                 />
