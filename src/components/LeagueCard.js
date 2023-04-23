@@ -15,9 +15,8 @@ const LeagueCard = ({ league, onLeagueClick, isSelected }) => {
   return (
     <Card
       sx={{
-        minWidth: 275,
-        maxWidth: 345,
-        margin: 2,
+        width: '100%',
+        position: 'relative',
         bgcolor: isSelected ? 'grey.300' : 'background.paper',
       }}
     >

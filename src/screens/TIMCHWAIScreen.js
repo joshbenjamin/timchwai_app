@@ -448,27 +448,29 @@ const getStylesBasedOnMessageState = (messageState) => {
             )}
 
             {leagues.length > 0 && showFilters && (
-                <Container className='leagues' maxWidth="md">
+                <Container className='leagues'>
                 <Box sx={{ marginTop: 2 }} />
                 <Typography variant="h4" component="h1" gutterBottom align="center">
                     Leagues
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2, marginTop: 2 }}>
-                    <Typography variant='h6' paddingRight='10px'>
+                    <Typography variant='subtitle1' paddingRight='10px' sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>
                     {selectedLeagues.length} selected
                     </Typography>
                     <FormControlLabel
                     control={<Checkbox checked={selectAllLeagues} onChange={handleSelectAllLeagues} />}
-                    label="Select All"
+                    label={<Typography variant="subtitle1" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>Select All</Typography>}
                     />
-                    <Button variant="contained" color="primary" onClick={toggleLeaguesCollapse}>
-                    {showLeagues ? 'Collapse' : 'Expand'}
+                    <Button variant="contained" color="primary" onClick={toggleLeaguesCollapse} size="small" sx={{ 
+                      fontSize: { xs: '0.8rem', sm: '0.9rem' } 
+                    }}>
+                      {showTeams ? 'Collapse' : 'Expand'}
                     </Button>
                 </Box>
                 {showLeagues && (
                     <Grid container spacing={2} justifyContent="center">
                     {leagues.map((league) => (
-                        <Grid item xs={6} sm={4} md={4} lg={4} key={league.id}>
+                        <Grid item xs={6} sm={4} md={3} lg={3} key={league.id}>
                         <LeagueCard league={league} onLeagueClick={onLeagueClick} isSelected={selectedLeagues.includes(league.id)} />
                         </Grid>
                     ))}
@@ -482,12 +484,13 @@ const getStylesBasedOnMessageState = (messageState) => {
             )}
             
             {leagueSeasons.length > 0 && showFilters && (
-                <Container className='league_seasons' maxWidth='md'>
+                <Container className='league_seasons'>
+                <Box sx={{ marginTop: 2 }} />
                 <Typography variant="h4" component="h1" gutterBottom align="center">
                     League Seasons
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
-                    <Typography variant='h6' paddingRight='10px'>
+                    <Typography variant='subtitle1' paddingRight='10px' sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>
                         {selectedLeagueSeasons.length} selected
                     </Typography>
                     <FormControlLabel
@@ -497,10 +500,12 @@ const getStylesBasedOnMessageState = (messageState) => {
                         onChange={handleSelectAllLeagueSeasons}
                         />
                     }
-                    label="Select All"
+                    label={<Typography variant="subtitle1" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>Select All</Typography>}
                     />
-                    <Button variant="contained" color="primary" onClick={toggleLeagueSeasonsCollapse}>
-                    {showLeagueSeasons ? 'Collapse' : 'Expand'}
+                    <Button variant="contained" color="primary" onClick={toggleLeagueSeasonsCollapse} size="small" sx={{ 
+                      fontSize: { xs: '0.8rem', sm: '0.9rem' } 
+                    }}>
+                      {showTeams ? 'Collapse' : 'Expand'}
                     </Button>
                 </Box>
                 {showLeagueSeasons && (
@@ -524,27 +529,31 @@ const getStylesBasedOnMessageState = (messageState) => {
             )}
 
             {teams.length > 0 && showFilters && (
-                <Container className='teams' maxWidth='md'>
+                <Container className='teams'>
+                <Box sx={{ marginTop: 2 }} />
                 <Typography variant="h4" component="h1" gutterBottom align="center">
                     Teams
                 </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <Typography variant='h6' paddingRight='10px'>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '8px' }}>
+                  <Typography variant='subtitle1' paddingRight='10px' sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>
                     {selectedTeams.length} selected
-                    </Typography>
-                    <FormControlLabel
+                  </Typography>
+                  <FormControlLabel
                     control={
-                        <Checkbox
+                      <Checkbox
                         checked={selectAllTeams}
                         onChange={handleSelectAllTeams}
-                        />
+                      />
                     }
-                    label="Select All"
-                    />
-                    <Button variant="contained" color="primary" onClick={toggleTeamsCollapse}>
+                    label={<Typography variant="subtitle1" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>Select All</Typography>}
+                  />
+                  <Button variant="contained" color="primary" onClick={toggleTeamsCollapse} size="small" sx={{ 
+                    fontSize: { xs: '0.8rem', sm: '0.9rem' } 
+                  }}>
                     {showTeams ? 'Collapse' : 'Expand'}
-                    </Button>
+                  </Button>
                 </Box>
+
                 {showTeams && (
                     <Grid container spacing={2} justifyContent="center">
                     {teams.map((team) => (

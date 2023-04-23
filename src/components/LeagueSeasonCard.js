@@ -13,9 +13,8 @@ const LeagueSeasonCard = ({ leagueSeason, onLeagueSeasonClick, isSelected }) => 
   return (
     <Card
       sx={{
-        minWidth: 240,
-        maxWidth: 320,
-        margin: 2,
+        width: '100%',
+        position: 'relative',
         bgcolor: isSelected ? 'grey.300' : 'background.paper',
       }}
     >
