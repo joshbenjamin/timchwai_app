@@ -468,7 +468,7 @@ const getStylesBasedOnMessageState = (messageState) => {
                 {showLeagues && (
                     <Grid container spacing={2} justifyContent="center">
                     {leagues.map((league) => (
-                        <Grid item xs={12} sm={6} key={league.id}>
+                        <Grid item xs={6} sm={4} md={4} lg={4} key={league.id}>
                         <LeagueCard league={league} onLeagueClick={onLeagueClick} isSelected={selectedLeagues.includes(league.id)} />
                         </Grid>
                     ))}
@@ -506,7 +506,7 @@ const getStylesBasedOnMessageState = (messageState) => {
                 {showLeagueSeasons && (
                     <Grid container spacing={2} justifyContent="center">
                     {leagueSeasons.map((leagueSeason) => (
-                        <Grid item xs={12} sm={6} key={leagueSeason.id}>
+                        <Grid item xs={6} sm={4} md={4} lg={4} key={leagueSeason.id}>
                             <LeagueSeasonCard
                                 leagueSeason={leagueSeason}
                                 onLeagueSeasonClick={onLeagueSeasonClick}
