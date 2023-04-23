@@ -7,7 +7,10 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Typography,
+  Box,
 } from '@mui/material';
+import { useTheme } from '@mui/system';
 
 const CareerTable = ({ careers }) => {
   // Group careers by type
@@ -19,9 +22,11 @@ const CareerTable = ({ careers }) => {
 
   const groupedCareers = groupBy(careers, 'type');
 
+  const theme = useTheme();
+
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Team</TableCell>
@@ -36,23 +41,28 @@ const CareerTable = ({ careers }) => {
             <React.Fragment key={group}>
               <TableRow>
                 <TableCell colSpan={5} style={{ fontWeight: 'bold' }}>
-                  {group}
+                  <Typography variant="subtitle1">{group}</Typography>
                 </TableCell>
               </TableRow>
               {groupCareers.map((career) => (
                 <TableRow key={career.id}>
                   <TableCell>
                     {career.Team.image && (
-                        <img
-                          src={career.Team.image}
-                          alt={career.Team.name}
-                          style={{ width: '50px' }}
-                        />
+                      <img
+                        src={career.Team.image}
+                        alt={career.Team.name}
+                        style={{
+                          width: theme.breakpoints.down('sm') ? '30px' : '50px',
+                        }}
+                      />
                     )}
                   </TableCell>
                   <TableCell>{career.Team.name}</TableCell>
                   <TableCell>
-                    {career.from_year} - {career.to_year ? career.to_year : 'Present'}
+                    <Box whiteSpace="nowrap">
+                      {career.from_year} -{' '}
+                      {career.to_year ? career.to_year : 'Present'}
+                    </Box>
                   </TableCell>
                   <TableCell>{career.apps}</TableCell>
                   <TableCell>{career.goals}</TableCell>

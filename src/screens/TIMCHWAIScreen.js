@@ -294,7 +294,7 @@ const handleGuess = () => {
     setMessageState('close');
   } else {
     setMessageState('error');
-    setMessage('Wrong guess. Try again!');
+    setMessage('Wrong. Try again!');
   }
   setOpenDialog(true);
 };
@@ -424,10 +424,9 @@ const getStylesBasedOnMessageState = (messageState) => {
                     </Typography>
                     )}
                 </Box>
-                <Container sx={{
-                        ...getStylesBasedOnMessageState(messageState)
-                    }}>
-                    <Dialog open={openDialog} onClose={handleCloseDialog}>
+                  <Dialog open={openDialog} onClose={handleCloseDialog} sx={{
+                      ...getStylesBasedOnMessageState(messageState)
+                  }}>
                     <DialogTitle>Result</DialogTitle>
                     <DialogContent>
                         <DialogContentText>{message}</DialogContentText>
@@ -444,12 +443,11 @@ const getStylesBasedOnMessageState = (messageState) => {
                         Close
                         </Button>
                     </DialogActions>
-                    </Dialog>
-                </Container>
+                  </Dialog>
                 </Container>
             )}
 
-            {leagues.length > 0 && showLeagues && showFilters && (
+            {leagues.length > 0 && showFilters && (
                 <Container className='leagues' maxWidth="md">
                 <Box sx={{ marginTop: 2 }} />
                 <Typography variant="h4" component="h1" gutterBottom align="center">
