@@ -13,12 +13,14 @@ import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation';
 import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import Collapse from '@mui/material/Collapse';
 
 
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
-
-import colors from '../components/colors';
 
 const PlayerScreen = () => {
   const { playerId } = useParams();
@@ -30,7 +32,9 @@ const PlayerScreen = () => {
   const [message, setMessage] = useState('');
   const [guessCount, setGuessCount] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
-  const [messageState, setMessageState] = useState('info');
+
+  const [showHint, setShowHint] = useState(false);
+
 
   useEffect(() => {
     const fetchPlayerData = async () => {
@@ -55,17 +59,26 @@ const PlayerScreen = () => {
     fetchPlayerData();
   }, [playerId]);
 
+  useEffect(() => {
+    let timeout;
+    if (showHint) {
+      timeout = setTimeout(() => {
+        setShowHint(false);
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [showHint]);
+
   const handleGuess = () => {
     setGuessCount(guessCount + 1);
     if (inputValue.toLowerCase() === player.name_basic.toLowerCase()) {
       setMessage('Correct!');
-      setMessageState('success');
       setShowPlayer(true);
     } else if(player.name_basic.toLowerCase().includes(inputValue.toLowerCase())) {
       setMessage("This is part of the player's name!");
-      setMessageState('close');
     } else {
-      setMessageState('error');
       setMessage('Wrong guess. Try again!');
     }
     setOpenDialog(true);
@@ -73,7 +86,6 @@ const PlayerScreen = () => {
   
   const handleGiveUp = () => {
     setMessage(`The correct answer is ${player.name_basic}`);
-    setMessageState('info');
     setOpenDialog(true);
     setShowPlayer(true);
   };
@@ -84,20 +96,6 @@ const PlayerScreen = () => {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value.trim());
-  };
-  
-  const getStylesBasedOnMessageState = (messageState) => {
-    switch (messageState) {
-      case 'success':
-        return { backgroundColor: colors.success_bg, color: colors.result_text };
-      case 'error':
-        return { backgroundColor: colors.close_bg, color: colors.result_text };
-      case 'close':
-        return { backgroundColor: colors.error_bg, color: colors.result_text };
-      case 'info':
-      default:
-        return { backgroundColor: colors.info_bg, color: colors.info_text };
-    }
   };
 
   if (!player) {
@@ -112,32 +110,43 @@ const PlayerScreen = () => {
         {player && career && !showPlayer && (
             <Container>
             <Box sx={{ marginTop: 2 }} />
-            <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <TextField
-                value={inputValue}
-                onChange={handleInputChange}
-                label="Enter name"
-                variant="outlined"
-                sx={{ marginRight: 2 }}
-                />
-                <Button variant="contained" color="primary" onClick={handleGuess} sx={{ marginRight: 1 }}>
-                Guess
-                </Button>
-                <Button variant="contained" color="secondary" onClick={handleGiveUp}>
-                Give Up
-                </Button>
-            </Box>
+            <Collapse in={showHint}>
+              <Typography variant="body1" sx={{ marginBottom: 1 }}>
+                Position(s): {player.positions.join(', ')}
+              </Typography>
+            </Collapse>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                {message && (
-                <Typography variant="body1" sx={{ marginTop: 2 }}>
-                    {message}
-                </Typography>
-                )}
-                {guessCount > 0 && (
-                <Typography variant="body1" sx={{ marginTop: 1 }}>
-                    Number of guesses: {guessCount}
-                </Typography>
-                )}
+              <Grid container spacing={1}>
+                <Grid item xs={10}>
+                  <TextField
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    label="Enter player name"
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <IconButton
+                      onClick={() => setShowHint(!showHint)}
+                    >
+                      <LightbulbIcon />
+                    </IconButton>
+                </Grid>
+              </Grid>
+            </Box>
+            <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+              <Grid container spacing={1}>
+                <Grid item xs={6}>
+                  <Button variant="contained" color="primary" onClick={handleGuess} sx={{ width: '100%', height: '40px' }}>
+                    Guess
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button variant="contained" color="secondary" onClick={handleGiveUp} sx={{ width: '100%', height: '40px', whiteSpace: 'nowrap' }}>
+                    Give Up
+                  </Button>
+                </Grid>
+              </Grid>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
               {!showPlayer && (
@@ -154,9 +163,7 @@ const PlayerScreen = () => {
                 </Link>
               )}
             </Box>
-            <Container sx={{
-                    ...getStylesBasedOnMessageState(messageState)
-                }}>
+            <Container>
                 <Dialog open={openDialog} onClose={handleCloseDialog}>
                 <DialogTitle>Result</DialogTitle>
                 <DialogContent>

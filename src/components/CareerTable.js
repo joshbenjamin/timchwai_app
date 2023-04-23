@@ -29,11 +29,11 @@ const CareerTable = ({ careers }) => {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Team</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Years</TableCell>
-            <TableCell>Apps</TableCell>
-            <TableCell>Goals</TableCell>
+            <TableCell sx={{ py: 1 }}>Team</TableCell>
+            <TableCell sx={{ py: 1 }}>Name</TableCell>
+            <TableCell sx={{ py: 1 }}>Years</TableCell>
+            <TableCell sx={{ py: 1 }}>Apps</TableCell>
+            <TableCell sx={{ py: 1 }}>Goals</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,7 +46,7 @@ const CareerTable = ({ careers }) => {
               </TableRow>
               {groupCareers.map((career) => (
                 <TableRow key={career.id}>
-                  <TableCell>
+                  <TableCell sx={{ py: 1 }}>
                     {career.Team.image && (
                       <img
                         src={career.Team.image}
@@ -57,15 +57,18 @@ const CareerTable = ({ careers }) => {
                       />
                     )}
                   </TableCell>
-                  <TableCell>{career.Team.name}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ py: 1 }}>
+                    {career.Team.name}
+                    {career.loan ? ' (loan)' : ''}
+                  </TableCell>
+                  <TableCell sx={{ py: 1 }}>
                     <Box whiteSpace="nowrap">
-                      {career.from_year} -{' '}
+                      {career.from_year} -<br />
                       {career.to_year ? career.to_year : 'Present'}
                     </Box>
                   </TableCell>
-                  <TableCell>{career.apps}</TableCell>
-                  <TableCell>{career.goals}</TableCell>
+                  <TableCell sx={{ py: 1 }}>{career.apps}</TableCell>
+                  <TableCell sx={{ py: 1 }}>{career.goals}</TableCell>
                 </TableRow>
               ))}
             </React.Fragment>

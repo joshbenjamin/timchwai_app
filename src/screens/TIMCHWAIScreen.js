@@ -18,14 +18,14 @@ import TeamCard from '../components/TeamCard';
 import PlayerCard from '../components/PlayerCard';
 import CareerTable from '../components/CareerTable';
 
-import colors from '../components/colors';
-
 import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation';
 import IconButton from '@mui/material/IconButton';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import Collapse from '@mui/material/Collapse';
+import AppBar from '@mui/material/AppBar';
+
 
 
 const TIMCHWAISCREEN = () => {
@@ -58,7 +58,6 @@ const TIMCHWAISCREEN = () => {
   const [message, setMessage] = useState('');
   const [guessCount, setGuessCount] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
-  const [messageState, setMessageState] = useState('info');
 
   const fetchLeagues = async () => {
     console.log('Fetching leagues for TIMCHWAI');
@@ -249,11 +248,6 @@ const TIMCHWAISCREEN = () => {
               teamIds: selectedTeams.join(','),
           },
       });
-      // const response = await axiosInstance.get('/api/player', {
-      //   params: {
-      //     playerId: 1
-      //   },
-      // });
 
       if (response.status === 200){
         setPlayer(response.data.player);
@@ -287,13 +281,10 @@ const handleGuess = () => {
   setGuessCount(guessCount + 1);
   if (inputValue.toLowerCase() === player.name_basic.toLowerCase()) {
     setMessage('Correct!');
-    setMessageState('success');
     setShowPlayer(true);
   } else if(player.name_basic.toLowerCase().includes(inputValue.toLowerCase())) {
     setMessage("This is part of the player's name!");
-    setMessageState('close');
   } else {
-    setMessageState('error');
     setMessage('Wrong. Try again!');
   }
   setOpenDialog(true);
@@ -301,7 +292,6 @@ const handleGuess = () => {
 
 const handleGiveUp = () => {
   setMessage(`The correct answer is ${player.name_basic}`);
-  setMessageState('info');
   setOpenDialog(true);
   setShowPlayer(true);
 };
@@ -310,59 +300,43 @@ const handleCloseDialog = () => {
   setOpenDialog(false);
 };
 
-const getStylesBasedOnMessageState = (messageState) => {
-  switch (messageState) {
-    case 'success':
-      return { backgroundColor: colors.success_bg, color: colors.result_text };
-    case 'error':
-      return { backgroundColor: colors.close_bg, color: colors.result_text };
-    case 'close':
-      return { backgroundColor: colors.error_bg, color: colors.result_text };
-    case 'info':
-    default:
-      return { backgroundColor: colors.info_bg, color: colors.info_text };
-  }
-};
-
   return (
     <div>
       <CssBaseline />
       <Navbar />
       <Container maxWidth="lg">
-      {selectedTeams.length > 0 && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'fixed',
-            top: 64,
-            left: 0,
-            right: 0,
-            background: 'white',
-            zIndex: 10,
-            paddingY: 1,
-            marginBottom: 2,
-          }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleRandomPlayerButtonClick}
-            sx={{ mr: 3 }}
+        <AppBar position="sticky" elevation={0} sx={{ background: 'transparent' }}>
+        {selectedTeams.length > 0 && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingY: 1,
+              marginBottom: 2,
+              marginTop: 2,
+              backgroundColor: 'white'
+            }}
           >
-            Generate Player
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleFilterButtonClick}
-            sx={{ minWidth: 'max-content' }}
-          >
-            {showFilters ? 'Hide Filters' : 'Show Filters'}
-          </Button>
-        </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleRandomPlayerButtonClick}
+              sx={{ mr: 3, whiteSpace: 'nowrap' }}
+            >
+              Generate Player
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleFilterButtonClick}
+              sx={{ minWidth: 'max-content' }}
+            >
+              {showFilters ? 'Hide Filters' : 'Show Filters'}
+            </Button>
+          </Box>
         )}
+        </AppBar>
         <Box sx={{ flexGrow: 1, p: 1 }}>
             {selectedTeams.length > 0 && (
                 <Container className='player'>                
@@ -386,31 +360,43 @@ const getStylesBasedOnMessageState = (messageState) => {
 
             {player && career && showCareer && (
                 <Container>
-                <Box sx={{ marginTop: 2 }} />
                 <Collapse in={showHint}>
                   <Typography variant="body1" sx={{ marginBottom: 1 }}>
                     Position(s): {player.positions.join(', ')}
                   </Typography>
                 </Collapse>
-                <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <TextField
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    label="Enter name"
-                    variant="outlined"
-                    sx={{ marginRight: 2 }}
-                    />
-                    <Button variant="contained" color="primary" onClick={handleGuess} sx={{ marginRight: 2 }}>
-                    Guess
-                    </Button>
-                    <Button variant="contained" color="secondary" onClick={handleGiveUp}>
-                    Give Up
-                    </Button>
-                    <IconButton
-                      onClick={() => setShowHint(!showHint)}
-                    >
-                      <LightbulbIcon />
-                    </IconButton>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={10}>
+                      <TextField
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        label="Enter player name"
+                        variant="outlined"
+                      />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <IconButton
+                          onClick={() => setShowHint(!showHint)}
+                        >
+                          <LightbulbIcon />
+                        </IconButton>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={6}>
+                      <Button variant="contained" color="primary" onClick={handleGuess} sx={{ width: '100%', height: '40px' }}>
+                        Guess
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button variant="contained" color="secondary" onClick={handleGiveUp} sx={{ width: '100%', height: '40px', whiteSpace: 'nowrap' }}>
+                        Give Up
+                      </Button>
+                    </Grid>
+                  </Grid>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     {message && (
@@ -424,9 +410,7 @@ const getStylesBasedOnMessageState = (messageState) => {
                     </Typography>
                     )}
                 </Box>
-                  <Dialog open={openDialog} onClose={handleCloseDialog} sx={{
-                      ...getStylesBasedOnMessageState(messageState)
-                  }}>
+                  <Dialog open={openDialog} onClose={handleCloseDialog}>
                     <DialogTitle>Result</DialogTitle>
                     <DialogContent>
                         <DialogContentText>{message}</DialogContentText>
