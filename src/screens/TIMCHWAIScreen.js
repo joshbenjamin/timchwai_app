@@ -24,7 +24,7 @@ import LoadingAnimation from '../components/LoadingAnimation';
 import IconButton from '@mui/material/IconButton';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import Collapse from '@mui/material/Collapse';
-import AppBar from '@mui/material/AppBar';
+import GeneratePlayerBar from '../components/GeneratePlayerBar';
 
 
 
@@ -56,7 +56,6 @@ const TIMCHWAISCREEN = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
-  const [guessCount, setGuessCount] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
 
   const fetchLeagues = async () => {
@@ -252,7 +251,6 @@ const TIMCHWAISCREEN = () => {
       if (response.status === 200){
         setPlayer(response.data.player);
         setCareer(response.data.career);
-        setGuessCount(0);
         setShowCareer(true);
         setShowPlayer(false);
         setShowFilters(false);
@@ -278,12 +276,9 @@ const handleInputChange = (e) => {
 };
 
 const handleGuess = () => {
-  setGuessCount(guessCount + 1);
   if (inputValue.toLowerCase() === player.name_basic.toLowerCase()) {
     setMessage('Correct!');
     setShowPlayer(true);
-  } else if(player.name_basic.toLowerCase().includes(inputValue.toLowerCase())) {
-    setMessage("This is part of the player's name!");
   } else {
     setMessage('Wrong. Try again!');
   }
@@ -305,38 +300,9 @@ const handleCloseDialog = () => {
       <CssBaseline />
       <Navbar />
       <Container maxWidth="lg">
-        <AppBar position="sticky" elevation={0} sx={{ background: 'transparent' }}>
         {selectedTeams.length > 0 && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingY: 1,
-              marginBottom: 2,
-              marginTop: 2,
-              backgroundColor: 'white'
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleRandomPlayerButtonClick}
-              sx={{ mr: 3, whiteSpace: 'nowrap' }}
-            >
-              Generate Player
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleFilterButtonClick}
-              sx={{ minWidth: 'max-content' }}
-            >
-              {showFilters ? 'Hide Filters' : 'Show Filters'}
-            </Button>
-          </Box>
+          <GeneratePlayerBar handleRandomPlayerButtonClick={handleRandomPlayerButtonClick} handleFilterButtonClick={handleFilterButtonClick} showFilters={showFilters} />
         )}
-        </AppBar>
         <Box sx={{ flexGrow: 1, p: 1 }}>
             {selectedTeams.length > 0 && (
                 <Container className='player'>                
@@ -405,23 +371,11 @@ const handleCloseDialog = () => {
                         {message}
                     </Typography>
                     )}
-                    {guessCount > 0 && (
-                    <Typography variant="body1" sx={{ marginTop: 1 }}>
-                        Number of guesses: {guessCount}
-                    </Typography>
-                    )}
                 </Box>
                   <Dialog open={openDialog} onClose={handleCloseDialog}>
                     <DialogTitle>Result</DialogTitle>
                     <DialogContent>
                         <DialogContentText>{message}</DialogContentText>
-                        {guessCount > 0 && (
-                        <Typography
-                            variant="body1"
-                        >
-                            Number of guesses: {guessCount}
-                        </Typography>
-                        )}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCloseDialog} color="primary">
@@ -434,7 +388,6 @@ const handleCloseDialog = () => {
 
             {leagues.length > 0 && showFilters && (
                 <Container className='leagues'>
-                <Box sx={{ marginTop: 2 }} />
                 <Typography variant="h4" component="h1" gutterBottom align="center">
                     Leagues
                 </Typography>

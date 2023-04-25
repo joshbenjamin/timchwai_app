@@ -30,7 +30,6 @@ const PlayerScreen = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
-  const [guessCount, setGuessCount] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
 
   const [showHint, setShowHint] = useState(false);
@@ -72,7 +71,6 @@ const PlayerScreen = () => {
   }, [showHint]);
 
   const handleGuess = () => {
-    setGuessCount(guessCount + 1);
     if (inputValue.toLowerCase() === player.name_basic.toLowerCase()) {
       setMessage('Correct!');
       setShowPlayer(true);
@@ -169,13 +167,6 @@ const PlayerScreen = () => {
                 <DialogTitle>Result</DialogTitle>
                 <DialogContent>
                     <DialogContentText>{message}</DialogContentText>
-                    {guessCount > 0 && (
-                    <Typography
-                        variant="body1"
-                    >
-                        Number of guesses: {guessCount}
-                    </Typography>
-                    )}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseDialog} color="primary">
