@@ -59,7 +59,6 @@ const CareerTable = ({ careers }) => {
                   </TableCell>
                   <TableCell sx={{ py: 1 }}>
                     {career.Team.name}
-                    {career.loan ? ' (loan)' : ''}
                   </TableCell>
                   <TableCell sx={{ py: 1 }}>
                     <Box whiteSpace="nowrap">
