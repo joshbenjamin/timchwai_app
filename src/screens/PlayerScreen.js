@@ -1,8 +1,7 @@
 // src/PlayerPage/PlayerScreen.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
-import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -14,12 +13,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import Collapse from '@mui/material/Collapse';
+
+import NameContext from '../components/NameContext';
 
 
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import PlayerSearchBar from '../components/PlayerSearchBar';
 
 
 const PlayerScreen = () => {
@@ -34,6 +33,7 @@ const PlayerScreen = () => {
 
   const [showHint, setShowHint] = useState(false);
 
+  const playerNames = useContext(NameContext);
 
   useEffect(() => {
     const fetchPlayerData = async () => {
@@ -74,8 +74,6 @@ const PlayerScreen = () => {
     if (inputValue.toLowerCase() === player.name_basic.toLowerCase()) {
       setMessage('Correct!');
       setShowPlayer(true);
-    } else if(player.name_basic.toLowerCase().includes(inputValue.toLowerCase())) {
-      setMessage("This is part of the player's name!");
     } else {
       setMessage('Wrong guess. Try again!');
     }
@@ -92,8 +90,8 @@ const PlayerScreen = () => {
     setOpenDialog(false);
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value.trim());
+  const handleInputChange = (newValue) => {
+    setInputValue(newValue);
   };
 
   if (!player) {
@@ -108,31 +106,9 @@ const PlayerScreen = () => {
         {player && career && !showPlayer && (
             <Container>
             <Box sx={{ marginTop: 2 }} />
-            <Collapse in={showHint}>
-              <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                Position(s): {player.positions.join(', ')}
-              </Typography>
-            </Collapse>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-              <Grid container spacing={1}>
-                <Grid item xs={10}>
-                  <TextField
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    label="Enter player name"
-                    variant="outlined"
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  <IconButton
-                      onClick={() => setShowHint(!showHint)}
-                    >
-                      <LightbulbIcon />
-                    </IconButton>
-                </Grid>
-              </Grid>
-            </Box>
+
+            <PlayerSearchBar player={player} playerNames={playerNames} onInputValueChange={handleInputChange} />
+
             <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
               <Grid container spacing={1}>
                 <Grid item xs={6}>

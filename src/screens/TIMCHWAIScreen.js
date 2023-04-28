@@ -1,6 +1,5 @@
 // src/Content.js
-import React, { useCallback, useEffect, useState } from 'react';
-import { TextField } from '@mui/material';
+import React, { useCallback, useEffect, useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -21,11 +20,10 @@ import CareerTable from '../components/CareerTable';
 import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation';
-import IconButton from '@mui/material/IconButton';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import Collapse from '@mui/material/Collapse';
 import GeneratePlayerBar from '../components/GeneratePlayerBar';
+import PlayerSearchBar from '../components/PlayerSearchBar';
 
+import NameContext from '../components/NameContext';
 
 
 const TIMCHWAISCREEN = () => {
@@ -54,9 +52,12 @@ const TIMCHWAISCREEN = () => {
   const [showCareer, setShowCareer] = useState(true);
   const [loadingPlayer, setLoadingPlayer] = useState(false);
 
+
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
+
+  const playerNames = useContext(NameContext);
 
   const fetchLeagues = async () => {
     console.log('Fetching leagues for TIMCHWAI');
@@ -69,7 +70,7 @@ const TIMCHWAISCREEN = () => {
         console.log(`Leagues:\n${JSON.stringify(response.data)}`);
         setLeagues(response.data);
     } catch (error) {
-        console.error('Error fetching leagues:', error);
+        console.error(`Error fetching leagues: ${error}`);
     }
   };
 
@@ -271,8 +272,8 @@ const handleFilterButtonClick = async () => {
   }
 };
 
-const handleInputChange = (e) => {
-  setInputValue(e.target.value);
+const handleInputChange = (newValue) => {
+  setInputValue(newValue);
 };
 
 const handleGuess = () => {
@@ -326,31 +327,7 @@ const handleCloseDialog = () => {
 
             {player && career && showCareer && (
                 <Container>
-                <Collapse in={showHint}>
-                  <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                    Position(s): {player.positions.join(', ')}
-                  </Typography>
-                </Collapse>
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={10}>
-                      <TextField
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        label="Enter player name"
-                        variant="outlined"
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={2}>
-                      <IconButton
-                          onClick={() => setShowHint(!showHint)}
-                        >
-                          <LightbulbIcon />
-                        </IconButton>
-                    </Grid>
-                  </Grid>
-                </Box>
+                <PlayerSearchBar player={player} playerNames={playerNames} onInputValueChange={handleInputChange} />
                 <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2, marginBottom: 2 }}>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>
