@@ -472,7 +472,7 @@ const handleCloseDialog = () => {
                 {showTeams && (
                     <Grid container spacing={2} justifyContent="center">
                     {teams.map((team) => (
-                        <Grid item xs={3} key={team.id}>
+                        <Grid item xs={3} sm={3} md={2} key={team.id}>
                           <TeamCard
                               team={team}
                               onTeamClick={onTeamClick}

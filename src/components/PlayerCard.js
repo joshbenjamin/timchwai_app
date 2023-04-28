@@ -44,6 +44,9 @@ const PlayerCard = ({ player, playerScreen = false }) => {
             {player.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
+            Date of Birth: {player.birth_date}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             Positions: {player.positions.join(', ')}
           </Typography>
           <Typography variant="body2" color="text.secondary" mt={1}>
