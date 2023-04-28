@@ -13,7 +13,7 @@ const TeamCard = ({ team, onTeamClick, isSelected }) => {
     <Card
       sx={{
         width: '100%',
-        paddingBottom: '75%', // Maintain aspect ratio 4:3
+        paddingBottom: '75%',
         position: 'relative',
         bgcolor: isSelected ? 'grey.300' : 'background.paper',
       }}
