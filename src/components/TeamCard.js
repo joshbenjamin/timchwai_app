@@ -39,7 +39,7 @@ const TeamCard = ({ team, onTeamClick, isSelected }) => {
             height: '90%',
           }}
           alt={team.name}
-          image={team.image}
+          image={`${team.image}?t_cache=public,max-age=31536000`}
         />
       </CardActionArea>
     </Card>

@@ -35,7 +35,7 @@ const PlayerCard = ({ player, playerScreen = false }) => {
         {player.image && (
           <CardMedia
             component="img"
-            image={player.image}
+            image={`${player.image}?t_cache=public,max-age=31536000`}
             alt={player.name}
           />
         )}

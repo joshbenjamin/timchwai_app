@@ -49,7 +49,7 @@ const CareerTable = ({ careers }) => {
                   <TableCell sx={{ py: 1 }}>
                     {career.Team.image && (
                       <img
-                        src={career.Team.image}
+                        src={`${career.Team.image}?t_cache=public,max-age=31536000`}
                         alt={career.Team.name}
                         style={{
                           width: theme.breakpoints.down('sm') ? '30px' : '50px',
