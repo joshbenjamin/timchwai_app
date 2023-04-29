@@ -26,7 +26,7 @@ const PlayerSearchBar = ({ player, playerNames, onInputValueChange }) => {
 
   const autoCompleteFilterOptions = createFilterOptions({
     matchFrom: 'start',
-    stringify: (option) => (option && option.length >= 3 ? option : ''),
+    stringify: (option) => (option && option.length >= 2 ? option : ''),
   });
 
   return (
