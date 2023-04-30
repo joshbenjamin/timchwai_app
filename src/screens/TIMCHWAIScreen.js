@@ -315,21 +315,7 @@ const handleCloseDialog = () => {
 
             {player && career && showCareer && (
                 <Container>
-                <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} />
-                <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2, marginBottom: 2 }}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={6}>
-                      <Button variant="contained" color="primary" onClick={handleGuess} sx={{ width: '100%', height: '40px' }}>
-                        Guess
-                      </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Button variant="contained" color="secondary" onClick={handleGiveUp} sx={{ width: '100%', height: '40px', whiteSpace: 'nowrap' }}>
-                        Give Up
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Box>
+                <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} handleGiveUp={handleGiveUp} handleGuess={handleGuess} />
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                     {message && (
                     <Typography variant="body1" sx={{ marginTop: 2 }}>

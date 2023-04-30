@@ -12,7 +12,6 @@ import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation/LoadingAnimation';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import PlayerSearchBar from '../components/PlayerSearchBar';
@@ -93,7 +92,15 @@ const PlayerScreen = () => {
   };
 
   if (!player || !players) {
-    return <LoadingAnimation />;
+    return (
+      <div>
+        <CssBaseline />
+        <Navbar players={players} />
+        <Container maxWidth="lg">
+          <LoadingAnimation />
+        </Container>
+      </div>
+    );
   }
 
   return (
@@ -105,22 +112,8 @@ const PlayerScreen = () => {
             <Container>
             <Box sx={{ marginTop: 2 }} />
 
-            <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} />
+            <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} handleGiveUp={handleGiveUp} handleGuess={handleGuess} />
 
-            <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
-                  <Button variant="contained" color="primary" onClick={handleGuess} sx={{ width: '100%', height: '40px' }}>
-                    Guess
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button variant="contained" color="secondary" onClick={handleGiveUp} sx={{ width: '100%', height: '40px', whiteSpace: 'nowrap' }}>
-                    Give Up
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
               {!showPlayer && (
                 <Link

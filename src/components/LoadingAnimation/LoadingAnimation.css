@@ -1,11 +1,11 @@
 .mover {
-  position: absolute;
+  position: relative;
+  margin-top: 10px;
   animation: move 1s infinite linear;    
 }
 
 .spinner {
   position: relative;
-  top: 150px;
   animation: spin 13s infinite linear;
 }
 

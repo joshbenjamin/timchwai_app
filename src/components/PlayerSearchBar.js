@@ -8,10 +8,12 @@ import Collapse from '@mui/material/Collapse';
 import { Autocomplete } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 
-const PlayerSearchBar = ({ player, players, onInputValueChange }) => {
+const PlayerSearchBar = ({ player, players, onInputValueChange, handleGuess, handleGiveUp }) => {
   const [showHint, setShowHint] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     let timeout;
@@ -26,8 +28,19 @@ const PlayerSearchBar = ({ player, players, onInputValueChange }) => {
   }, [showHint]);
 
   const onInputChange = (event, newValue) => {
+    setInputValue(newValue);
     onInputValueChange(newValue);
   };
+
+  const onGuessClick = () => {
+    if (inputValue !== ''){
+      return handleGuess();
+    }
+  }
+
+  const onGiveUpClick = () => {
+    return handleGiveUp();
+  }
 
   const getNameBasics = () => {
     if (!players || players.length === 0){
@@ -71,6 +84,20 @@ const PlayerSearchBar = ({ player, players, onInputValueChange }) => {
               </Box>
             </Grid>
             </Grid>
+        </Box>
+        <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
+          <Grid container spacing={1}>
+            <Grid item xs={6}>
+              <Button variant="contained" color="primary" onClick={onGuessClick} sx={{ width: '100%', height: '40px' }}>
+                Guess
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button variant="contained" color="secondary" onClick={onGiveUpClick} sx={{ width: '100%', height: '40px', whiteSpace: 'nowrap' }}>
+                Give Up
+              </Button>
+            </Grid>
+          </Grid>
         </Box>
     </div>
   );
