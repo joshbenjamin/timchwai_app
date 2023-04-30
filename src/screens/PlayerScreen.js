@@ -99,7 +99,7 @@ const PlayerScreen = () => {
   return (
     <div>
         <CssBaseline />
-        <Navbar />
+        <Navbar players={players} />
         <Container maxWidth="lg">
         {player && career && !showPlayer && (
             <Container>

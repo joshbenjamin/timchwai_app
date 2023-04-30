@@ -286,7 +286,7 @@ const handleCloseDialog = () => {
   return (
     <div>
       <CssBaseline />
-      <Navbar />
+      <Navbar players={players}/>
       <Container maxWidth="lg">
         {selectedTeams.length > 0 && (
           <GeneratePlayerBar handleRandomPlayerButtonClick={handleRandomPlayerButtonClick} handleFilterButtonClick={handleFilterButtonClick} showFilters={showFilters} />
