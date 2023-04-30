@@ -44,7 +44,7 @@ const PlayerCard = ({ player, playerScreen = false }) => {
             {player.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Date of Birth: {player.birth_date}
+            Date of Birth: {new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'long', day: '2-digit' }).format(new Date(player.birth_date))}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Positions: {player.positions.join(', ')}
