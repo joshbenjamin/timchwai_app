@@ -19,7 +19,7 @@ import CareerTable from '../components/CareerTable';
 
 import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
-import LoadingAnimation from '../components/LoadingAnimation';
+import LoadingAnimation from '../components/LoadingAnimation/LoadingAnimation';
 import GeneratePlayerBar from '../components/GeneratePlayerBar';
 import PlayerSearchBar from '../components/PlayerSearchBar';
 

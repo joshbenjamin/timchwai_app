@@ -10,7 +10,7 @@ import PlayerCard from '../components/PlayerCard';
 import CareerTable from '../components/CareerTable';
 import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
-import LoadingAnimation from '../components/LoadingAnimation';
+import LoadingAnimation from '../components/LoadingAnimation/LoadingAnimation';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 

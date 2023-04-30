@@ -1,0 +1,27 @@
+.mover {
+  position: absolute;
+  animation: move 1s infinite linear;    
+}
+
+.spinner {
+  position: relative;
+  top: 150px;
+  animation: spin 13s infinite linear;
+}
+
+
+@keyframes spin { 
+  100% { 
+      transform: rotate(360deg);
+  } 
+}
+
+@keyframes move {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
