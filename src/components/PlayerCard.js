@@ -52,7 +52,12 @@ const PlayerCard = ({ player, playerScreen = false }) => {
               `Position: ${player.positions[0]}`
             }
           </Typography>
-          <Typography variant="body2" color="text.secondary" mt={1}>
+          {player.Careers.length !== 0 && (
+            <Typography variant="body2" color="text.secondary" marginTop={1}>
+              Current Team: {player.Careers[0].Team.name}
+            </Typography>
+          )}
+          <Typography variant="body2" color="text.secondary" marginTop={1}>
             <Link href={`https://en.wikipedia.org/wiki/${player.wiki_link}`} target="_blank" rel="noopener">
               Wikipedia
             </Link>
