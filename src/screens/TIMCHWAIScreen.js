@@ -23,12 +23,11 @@ import LoadingAnimation from '../components/LoadingAnimation';
 import GeneratePlayerBar from '../components/GeneratePlayerBar';
 import PlayerSearchBar from '../components/PlayerSearchBar';
 
-import NameContext from '../components/NameContext';
+import PlayerContext from '../components/PlayerContext';
 
 
 const TIMCHWAISCREEN = () => {
   const [showFilters, setShowFilters] = useState(true);
-  const [showHint, setShowHint] = useState(false);
 
   const [leagues, setLeagues] = useState([]);
   const [selectedLeagues, setSelectedLeagues] = useState([]);
@@ -57,7 +56,7 @@ const TIMCHWAISCREEN = () => {
   const [message, setMessage] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
 
-  const playerNames = useContext(NameContext);
+  const players = useContext(PlayerContext);
 
   const fetchLeagues = async () => {
     console.log('Fetching leagues for TIMCHWAI');
@@ -125,18 +124,6 @@ const TIMCHWAISCREEN = () => {
       fetchLeagueSeasons(selectedLeagues);
     }
   }, [selectedLeagues, fetchLeagueSeasons]);
-
-  useEffect(() => {
-    let timeout;
-    if (showHint) {
-      timeout = setTimeout(() => {
-        setShowHint(false);
-      }, 1000);
-    }
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [showHint]);
 
   // Select
 
@@ -287,7 +274,7 @@ const handleGuess = () => {
 };
 
 const handleGiveUp = () => {
-  setMessage(`The correct answer is ${player.name_basic}`);
+  setMessage(`The correct answer is ${player.name}`);
   setOpenDialog(true);
   setShowPlayer(true);
 };
@@ -327,7 +314,7 @@ const handleCloseDialog = () => {
 
             {player && career && showCareer && (
                 <Container>
-                <PlayerSearchBar player={player} playerNames={playerNames} onInputValueChange={handleInputChange} />
+                <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} />
                 <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2, marginBottom: 2 }}>
                   <Grid container spacing={1}>
                     <Grid item xs={6}>

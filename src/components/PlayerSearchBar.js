@@ -1,33 +1,42 @@
 // src/PlayerSearchBar.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import Collapse from '@mui/material/Collapse';
 import { Autocomplete } from '@mui/material';
-import { createFilterOptions } from '@mui/material/Autocomplete';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
 
-const PlayerSearchBar = ({ player, playerNames, onInputValueChange }) => {
+const PlayerSearchBar = ({ player, players, onInputValueChange }) => {
   const [showHint, setShowHint] = useState(false);
-  const [autoCompletePlayer, setAutoCompletePlayer] = useState(null);
+
+  useEffect(() => {
+    let timeout;
+    if (showHint) {
+      timeout = setTimeout(() => {
+        setShowHint(false);
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [showHint]);
 
   const onInputChange = (event, newValue) => {
     onInputValueChange(newValue);
-    if (playerNames.includes(newValue)){
-      setAutoCompletePlayer(newValue);
-    } else {
-      setAutoCompletePlayer(null);
-    }
   };
 
-  const autoCompleteFilterOptions = createFilterOptions({
-    matchFrom: 'start',
-    stringify: (option) => (option && option.length >= 2 ? option : ''),
-  });
+  const getNameBasics = () => {
+    if (!players || players.length === 0){
+      console.error(`No players to display!`);
+    } else {
+      return [...new Set(players.map((player) => player.name_basic))];
+    }
+  }
+  
 
   return (
     <div>
@@ -38,28 +47,28 @@ const PlayerSearchBar = ({ player, playerNames, onInputValueChange }) => {
         </Collapse>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Grid container spacing={1}>
-            <Grid item xs={10}>
-                <Autocomplete
-                    value={autoCompletePlayer}
-                    onInputChange={onInputChange}
-                    options={playerNames}
-                    getOptionLabel={(player) => player || ''}
-                    filterOptions={autoCompleteFilterOptions}
-                    isOptionEqualToValue={(option, value) => option === value}
-                    renderInput={(params) => (
-                        <TextField
-                        {...params}
-                        label="Enter player name"
-                        variant="outlined"
-                        fullWidth
-                        />
-                    )}
+            <Grid item xs={11}>
+            <Autocomplete
+              autoHighlight={true}
+              onInputChange={onInputChange}
+              options={getNameBasics()}
+              getOptionLabel={(name) => name || ''}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Enter player name"
+                  variant="outlined"
+                  fullWidth
                 />
+              )}
+            />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={1}>
+              <Box display="flex" justifyContent="center" alignItems="center" height="100%">
                 <IconButton onClick={() => setShowHint(!showHint)}>
-                <LightbulbIcon />
+                  <LightbulbIcon />
                 </IconButton>
+              </Box>
             </Grid>
             </Grid>
         </Box>

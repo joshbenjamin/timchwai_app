@@ -26,7 +26,7 @@ const LeagueCard = ({ league, onLeagueClick, isSelected }) => {
             {league.name}
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2 }}>
-            <CardMedia component="img" image={league.image} alt={league.name} />
+            <CardMedia component="img" image={`${league.image}?t_cache=public,max-age=31536000`} alt={league.name} />
           </Box>
         </CardContent>
       </CardActionArea>

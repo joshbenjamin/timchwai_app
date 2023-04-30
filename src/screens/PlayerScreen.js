@@ -14,11 +14,9 @@ import LoadingAnimation from '../components/LoadingAnimation';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 
-import NameContext from '../components/NameContext';
-
-
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import PlayerSearchBar from '../components/PlayerSearchBar';
+import PlayerContext from '../components/PlayerContext';
 
 
 const PlayerScreen = () => {
@@ -33,7 +31,7 @@ const PlayerScreen = () => {
 
   const [showHint, setShowHint] = useState(false);
 
-  const playerNames = useContext(NameContext);
+  const players = useContext(PlayerContext);
 
   useEffect(() => {
     const fetchPlayerData = async () => {
@@ -94,7 +92,7 @@ const PlayerScreen = () => {
     setInputValue(newValue);
   };
 
-  if (!player) {
+  if (!player || !players) {
     return <LoadingAnimation />;
   }
 
@@ -107,7 +105,7 @@ const PlayerScreen = () => {
             <Container>
             <Box sx={{ marginTop: 2 }} />
 
-            <PlayerSearchBar player={player} playerNames={playerNames} onInputValueChange={handleInputChange} />
+            <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} />
 
             <Box component="form" onSubmit={(e) => e.preventDefault()} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 2 }}>
               <Grid container spacing={1}>
