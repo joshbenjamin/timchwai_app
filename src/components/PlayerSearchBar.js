@@ -45,7 +45,7 @@ const PlayerSearchBar = ({ player, players, onInputValueChange }) => {
             Position(s): {player.positions.join(', ')}
             </Typography>
         </Collapse>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', maxHeight: '50vh', }}>
             <Grid container spacing={1}>
             <Grid item xs={11}>
             <Autocomplete

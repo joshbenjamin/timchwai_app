@@ -47,7 +47,10 @@ const PlayerCard = ({ player, playerScreen = false }) => {
             Date of Birth: {new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'long', day: '2-digit' }).format(new Date(player.birth_date))}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Positions: {player.positions.join(', ')}
+            {player.positions.length > 1 ? 
+              `Position(s): ${player.positions.join(', ')}` : 
+              `Position: ${player.positions[0]}`
+            }
           </Typography>
           <Typography variant="body2" color="text.secondary" mt={1}>
             <Link href={`https://en.wikipedia.org/wiki/${player.wiki_link}`} target="_blank" rel="noopener">

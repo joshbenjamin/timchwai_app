@@ -27,6 +27,22 @@ const CareerTable = ({ careers }) => {
       return sortOrder.indexOf(a) - sortOrder.indexOf(b);
     });
   };
+
+  const getFontWeight = (career) => {
+    if (career.to_year === null) {
+      return 'bold';
+    } else {
+      return 'normal';
+    }
+  };
+
+  const getFontStyle = (career) => {
+    if (career.loan === true) {
+      return 'italic';
+    } else {
+      return 'normal';
+    }
+  };
     
 
   const groupedCareers = groupBy(careers, 'type');
@@ -68,7 +84,7 @@ const CareerTable = ({ careers }) => {
                         />
                       )}
                     </TableCell>
-                    <TableCell sx={{ py: 1 }}>{career.Team.name}</TableCell>
+                    <TableCell sx={{ py: 1, fontWeight: getFontWeight(career), fontStyle: getFontStyle(career) }}>{career.Team.name}</TableCell>
                     <TableCell sx={{ py: 1 }}>
                       <Box whiteSpace="nowrap">
                         {career.from_year} -<br />

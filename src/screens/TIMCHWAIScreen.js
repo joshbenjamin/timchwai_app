@@ -224,6 +224,7 @@ const TIMCHWAISCREEN = () => {
     setCareer({});
     setShowPlayer(false);
     setShowCareer(false);
+    setShowFilters(false);
     setLoadingPlayer(true);
     setInputValue('');
     setMessage('');
@@ -413,7 +414,7 @@ const handleCloseDialog = () => {
                 {showLeagueSeasons && (
                     <Grid container spacing={2} justifyContent="center">
                     {leagueSeasons.map((leagueSeason) => (
-                        <Grid item xs={6} sm={4} md={4} lg={4} key={leagueSeason.id}>
+                        <Grid item xs={6} sm={4} md={3} lg={3} key={leagueSeason.id}>
                             <LeagueSeasonCard
                                 leagueSeason={leagueSeason}
                                 onLeagueSeasonClick={onLeagueSeasonClick}
