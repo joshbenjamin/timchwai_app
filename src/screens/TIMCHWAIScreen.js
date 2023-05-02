@@ -1,5 +1,5 @@
 // src/Content.js
-import React, { useCallback, useEffect, useState, useContext } from 'react';
+import React, { useCallback, useEffect, useState, useContext, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -51,10 +51,12 @@ const TIMCHWAISCREEN = () => {
   const [showCareer, setShowCareer] = useState(true);
   const [loadingPlayer, setLoadingPlayer] = useState(false);
 
-
   const [inputValue, setInputValue] = useState('');
   const [message, setMessage] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
+
+  const leagueSeasonsRef = useRef(null);
+  const teamsRef = useRef(null);
 
   const players = useContext(PlayerContext);
 
@@ -131,6 +133,9 @@ const TIMCHWAISCREEN = () => {
     setSelectAllLeagues(!selectAllLeagues);
     if (!selectAllLeagues) {
         setSelectedLeagues(leagues.map((league) => league.id));
+        if (leagueSeasonsRef.current) {
+          leagueSeasonsRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     } else {
         setSelectedLeagues([]);
     }
@@ -140,6 +145,9 @@ const TIMCHWAISCREEN = () => {
     setSelectAllLeagueSeasons(!selectAllLeagueSeasons);
     if (!selectAllLeagueSeasons) {
         setSelectedLeagueSeasons(leagueSeasons.map((leagueSeason) => leagueSeason.id));
+        if (teamsRef.current) {
+          teamsRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     } else {
         setSelectedLeagueSeasons([]);
     }
@@ -373,7 +381,7 @@ const handleCloseDialog = () => {
             )}
             
             {leagueSeasons.length > 0 && showFilters && (
-                <Container className='league_seasons'>
+                <Container className='league_seasons' ref={leagueSeasonsRef}>
                 <Box sx={{ marginTop: 2 }} />
                 <Typography variant="h4" component="h1" gutterBottom align="center">
                     League Seasons
@@ -418,7 +426,7 @@ const handleCloseDialog = () => {
             )}
 
             {teams.length > 0 && showFilters && (
-                <Container className='teams'>
+                <Container className='teams' ref={teamsRef}>
                 <Box sx={{ marginTop: 2 }} />
                 <Typography variant="h4" component="h1" gutterBottom align="center">
                     Teams
