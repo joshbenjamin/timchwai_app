@@ -1,16 +1,7 @@
-// src/PlayerCard.js
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import { Button, CardActions } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-
-import IconButton from '@mui/material/IconButton';
+import { Card, CardActionArea, CardContent, CardMedia, Typography, Link, Button, CardActions, IconButton, Table, TableBody, TableCell, TableRow } from '@mui/material';
 import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+import { useNavigate } from 'react-router-dom';
 
 const PlayerCard = ({ player, playerScreen = false }) => {
   const navigate = useNavigate();
@@ -29,8 +20,15 @@ const PlayerCard = ({ player, playerScreen = false }) => {
     }
   };
 
+  const metersToFeetAndInches = (meters) => {
+    const totalInches = meters * 39.3701;
+    const feet = Math.floor(totalInches / 12);
+    const inches = Math.round(totalInches % 12);
+    return `${feet} ft ${inches} in`;
+  };
+
   return (
-    <Card sx={{ minWidth: 275, maxWidth: 345, margin: 2 }}>
+    <Card sx={{ minWidth: 290, maxWidth: 380, margin: 2 }}>
       <CardActionArea>
         {player.image && (
           <CardMedia
@@ -40,28 +38,59 @@ const PlayerCard = ({ player, playerScreen = false }) => {
           />
         )}
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h5" component="h2" textAlign={'center'}>
             {player.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Date of Birth: {new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'long', day: '2-digit' }).format(new Date(player.birth_date))}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {player.positions.length > 1 ? 
-              `Position(s): ${player.positions.join(', ')}` : 
-              `Position: ${player.positions[0]}`
-            }
-          </Typography>
-          {player.Careers.length !== 0 && (
-            <Typography variant="body2" color="text.secondary" marginTop={1}>
-              Current Team: {player.Careers[0].Team.name}
-            </Typography>
-          )}
-          <Typography variant="body2" color="text.secondary" marginTop={1}>
-            <Link href={`https://en.wikipedia.org/wiki/${player.wiki_link}`} target="_blank" rel="noopener">
-              Wikipedia
-            </Link>
-          </Typography>
+          <Table>
+            <TableBody>
+              {player.full_name !== null && (
+                <TableRow>
+                  <TableCell variant="head">Full Name</TableCell>
+                  <TableCell>{player.full_name}</TableCell>
+                </TableRow>
+              )}
+              {player.birth_place !== null && (
+                <TableRow>
+                  <TableCell variant="head">Origin</TableCell>
+                  <TableCell>{player.birth_place}</TableCell>
+                </TableRow>
+              )}
+              <TableRow>
+                <TableCell variant="head">Birthday</TableCell>
+                <TableCell>
+                  {new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'long', day: '2-digit' }).format(new Date(player.birth_date))}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell variant="head">{player.positions.length > 1 ? 'Positions' : 'Position'}</TableCell>
+                <TableCell>
+                  {player.positions.join(', ')}
+                </TableCell>
+              </TableRow>
+              {(player.height !== null || player.height !== 0) && (
+                <TableRow>
+                  <TableCell variant="head">Height</TableCell>
+                  <TableCell>
+                    {player.height + `m (${metersToFeetAndInches(player.height)})`}
+                  </TableCell>
+                </TableRow>
+              )}
+              {player.Careers.length !== 0 && (
+                <TableRow>
+                  <TableCell variant="head">Current Team</TableCell>
+                  <TableCell>{player.Careers[0].Team.name}</TableCell>
+                </TableRow>
+              )}
+              <TableRow>
+                <TableCell variant="head">Wikipedia</TableCell>
+                <TableCell>
+                  <Link href={`https://en.wikipedia.org/wiki/${player.wiki_link}`} target="_blank" rel="noopener">
+                    {player.wiki_link}
+                  </Link>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </CardContent>
       </CardActionArea>
       <CardActions sx={{ display: 'flex', justifyContent: 'center', paddingBottom: 2 }}>
@@ -83,7 +112,7 @@ const PlayerCard = ({ player, playerScreen = false }) => {
           <FileCopyOutlinedIcon />
         </IconButton>
       </CardActions>
-    </Card>
+      </Card>
   );
 };
 

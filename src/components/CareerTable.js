@@ -21,7 +21,7 @@ const CareerTable = ({ careers }) => {
     }, {});
 
   const sortGroups = (groups) => {
-    const sortOrder = ['YOUTH', 'SENIOR', 'INTERNATIONAL', 'MANAGER'];
+    const sortOrder = ['YOUTH', 'COLLEGE', 'SENIOR', 'INTERNATIONAL', 'MANAGER'];
   
     return groups.sort((a, b) => {
       return sortOrder.indexOf(a) - sortOrder.indexOf(b);
