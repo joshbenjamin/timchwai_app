@@ -31,7 +31,7 @@ const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonCl
                 onClick={generateClick}
                 sx={{ mr: 3, whiteSpace: 'nowrap' }}
             >
-                Generate Player
+                Random Player
             </Button>
             <Button
                 variant="contained"

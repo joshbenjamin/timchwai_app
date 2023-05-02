@@ -68,7 +68,7 @@ const PlayerCard = ({ player, playerScreen = false }) => {
               <TableRow>
                 <TableCell variant="head">Birthday</TableCell>
                 <TableCell>
-                  {new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'long', day: '2-digit' }).format(new Date(player.birth_date))}
+                  {new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(player.birth_date))}
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -95,7 +95,7 @@ const PlayerCard = ({ player, playerScreen = false }) => {
                 <TableCell variant="head">Wikipedia</TableCell>
                 <TableCell>
                   <Link href={`https://en.wikipedia.org/wiki/${player.wiki_link}`} target="_blank" rel="noopener">
-                    {player.wiki_link}
+                    {player.name}
                   </Link>
                 </TableCell>
               </TableRow>
