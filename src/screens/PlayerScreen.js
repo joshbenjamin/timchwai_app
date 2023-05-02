@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import PlayerCard from '../components/PlayerCard';
@@ -13,7 +12,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation/LoadingAnimation';
 import Link from '@mui/material/Link';
 
-import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import PlayerSearchBar from '../components/PlayerSearchBar';
 import PlayerContext from '../components/PlayerContext';
 
@@ -23,10 +21,6 @@ const PlayerScreen = () => {
   const [player, setPlayer] = useState(null);
   const [showPlayer, setShowPlayer] = useState(false);
   const [career, setCareer] = useState([]);
-
-  const [inputValue, setInputValue] = useState('');
-  const [message, setMessage] = useState('');
-  const [openDialog, setOpenDialog] = useState(false);
 
   const [showHint, setShowHint] = useState(false);
 
@@ -67,29 +61,9 @@ const PlayerScreen = () => {
     };
   }, [showHint]);
 
-  const handleGuess = () => {
-    if (inputValue.toLowerCase() === player.name_basic.toLowerCase()) {
-      setMessage('Correct!');
-      setShowPlayer(true);
-    } else {
-      setMessage('Wrong guess. Try again!');
-    }
-    setOpenDialog(true);
-  };
-  
-  const handleGiveUp = () => {
-    setMessage(`The correct answer is ${player.name_basic}`);
-    setOpenDialog(true);
-    setShowPlayer(true);
-  };
-  
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  const handleInputChange = (newValue) => {
-    setInputValue(newValue);
-  };
+  const onShowPlayer = async (val) => {
+    setShowPlayer(val);
+  }
 
   if (!player || !players) {
     return (
@@ -110,38 +84,25 @@ const PlayerScreen = () => {
         <Container maxWidth="lg">
         {player && career && !showPlayer && (
             <Container>
-            <Box sx={{ marginTop: 2 }} />
+              <Box sx={{ marginTop: 2 }} />
 
-            <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} handleGiveUp={handleGiveUp} handleGuess={handleGuess} />
+              <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-              {!showPlayer && (
-                <Link
-                  underline="hover"
-                  sx={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    setShowPlayer(true);
-                  }}
-                >
-                  <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
-                    Show Player
-                  </Typography>
-                </Link>
-              )}
-            </Box>
-            <Container>
-                <Dialog open={openDialog} onClose={handleCloseDialog}>
-                <DialogTitle>Result</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>{message}</DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog} color="primary">
-                    Close
-                    </Button>
-                </DialogActions>
-                </Dialog>
-            </Container>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                {!showPlayer && (
+                  <Link
+                    underline="hover"
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      setShowPlayer(true);
+                    }}
+                  >
+                    <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
+                      Show Player
+                    </Typography>
+                  </Link>
+                )}
+              </Box>
             </Container>
         )}
             {showPlayer && (

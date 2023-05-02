@@ -1,4 +1,3 @@
-// src/Content.js
 import React, { useCallback, useEffect, useState, useContext, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,8 +7,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import axiosInstance from '../axiosInstance';
-
-import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
 import LeagueCard from '../components/LeagueCard';
 import LeagueSeasonCard from '../components/LeagueSeasonCard';
@@ -50,10 +47,6 @@ const TIMCHWAISCREEN = () => {
   const [career, setCareer] = useState(null);
   const [showCareer, setShowCareer] = useState(true);
   const [loadingPlayer, setLoadingPlayer] = useState(false);
-
-  const [inputValue, setInputValue] = useState('');
-  const [message, setMessage] = useState('');
-  const [openDialog, setOpenDialog] = useState(false);
 
   const leagueSeasonsRef = useRef(null);
   const teamsRef = useRef(null);
@@ -227,6 +220,10 @@ const TIMCHWAISCREEN = () => {
 
   // Player
 
+  const onShowPlayer = async (val) => {
+    setShowPlayer(val);
+  }
+
   const handleRandomPlayerButtonClick = async () => {
     setPlayer({});
     setCareer({});
@@ -234,8 +231,6 @@ const TIMCHWAISCREEN = () => {
     setShowCareer(false);
     setShowFilters(false);
     setLoadingPlayer(true);
-    setInputValue('');
-    setMessage('');
 
     try {
       const response = await axiosInstance.get('/api/player_in_team_seasons', {
@@ -268,30 +263,6 @@ const handleFilterButtonClick = async () => {
   }
 };
 
-const handleInputChange = (newValue) => {
-  setInputValue(newValue);
-};
-
-const handleGuess = () => {
-  if (inputValue.toLowerCase() === player.name_basic.toLowerCase()) {
-    setMessage('Correct!');
-    setShowPlayer(true);
-  } else {
-    setMessage('Wrong. Try again!');
-  }
-  setOpenDialog(true);
-};
-
-const handleGiveUp = () => {
-  setMessage(`The correct answer is ${player.name}`);
-  setOpenDialog(true);
-  setShowPlayer(true);
-};
-
-const handleCloseDialog = () => {
-  setOpenDialog(false);
-};
-
   return (
     <div>
       <CssBaseline />
@@ -321,28 +292,8 @@ const handleCloseDialog = () => {
                 </Container>
             )}
 
-            {player && career && showCareer && (
-                <Container>
-                <PlayerSearchBar player={player} players={players} onInputValueChange={handleInputChange} handleGiveUp={handleGiveUp} handleGuess={handleGuess} />
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                    {message && (
-                    <Typography variant="body1" sx={{ marginTop: 2 }}>
-                        {message}
-                    </Typography>
-                    )}
-                </Box>
-                  <Dialog open={openDialog} onClose={handleCloseDialog}>
-                    <DialogTitle>Result</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>{message}</DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleCloseDialog} color="primary">
-                        Close
-                        </Button>
-                    </DialogActions>
-                  </Dialog>
-                </Container>
+            {player && career && showCareer && !showPlayer && (
+              <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
             )}
 
             {leagues.length > 0 && showFilters && (
@@ -358,7 +309,7 @@ const handleCloseDialog = () => {
                     control={<Checkbox checked={selectAllLeagues} onChange={handleSelectAllLeagues} />}
                     label={<Typography variant="subtitle1" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>Select All</Typography>}
                     />
-                    <Button variant="contained" color="primary" onClick={toggleLeaguesCollapse} size="small" sx={{ 
+                    <Button variant="contained" color="info" onClick={toggleLeaguesCollapse} size="small" sx={{ 
                       fontSize: { xs: '0.8rem', sm: '0.9rem' } 
                     }}>
                       {showLeagues ? 'Collapse' : 'Expand'}
@@ -399,7 +350,7 @@ const handleCloseDialog = () => {
                     }
                     label={<Typography variant="subtitle1" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>Select All</Typography>}
                     />
-                    <Button variant="contained" color="primary" onClick={toggleLeagueSeasonsCollapse} size="small" sx={{ 
+                    <Button variant="contained" color="info" onClick={toggleLeagueSeasonsCollapse} size="small" sx={{ 
                       fontSize: { xs: '0.8rem', sm: '0.9rem' } 
                     }}>
                       {showLeagueSeasons ? 'Collapse' : 'Expand'}
@@ -444,7 +395,7 @@ const handleCloseDialog = () => {
                     }
                     label={<Typography variant="subtitle1" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' }, whiteSpace: 'nowrap' }}>Select All</Typography>}
                   />
-                  <Button variant="contained" color="primary" onClick={toggleTeamsCollapse} size="small" sx={{ 
+                  <Button variant="contained" color="info" onClick={toggleTeamsCollapse} size="small" sx={{ 
                     fontSize: { xs: '0.8rem', sm: '0.9rem' } 
                   }}>
                     {showTeams ? 'Collapse' : 'Expand'}
