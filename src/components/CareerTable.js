@@ -13,7 +13,7 @@ import {
 import { useTheme } from '@mui/system';
 
 const CareerTable = ({ careers }) => {
-  // Group careers by type
+
   const groupBy = (array, key) =>
     array.reduce((result, item) => {
       (result[item[key]] = result[item[key]] || []).push(item);
@@ -27,6 +27,14 @@ const CareerTable = ({ careers }) => {
       return sortOrder.indexOf(a) - sortOrder.indexOf(b);
     });
   };
+
+  const hasLoan = (careers) => {
+    return careers.some((career) => career.loan === true);
+  };
+  
+  const hasCurrentTeam = (careers) => {
+    return careers.some((career) => career.to_year === null);
+  };  
 
   const getFontWeight = (career) => {
     if (career.to_year === null) {
@@ -43,7 +51,6 @@ const CareerTable = ({ careers }) => {
       return 'normal';
     }
   };
-    
 
   const groupedCareers = groupBy(careers, 'type');
 
@@ -51,6 +58,23 @@ const CareerTable = ({ careers }) => {
 
   return (
     <TableContainer component={Paper}>
+      <Box sx={{ mt: 2, mb: 1 }}>
+        {hasLoan(careers) && (
+          <Typography variant="body2" component="span" fontStyle="italic">
+            Italics: Loan
+          </Typography>
+        )}
+        {hasLoan(careers) && hasCurrentTeam(careers) && (
+          <Typography variant="body2" component="span">
+            {' | '}
+          </Typography>
+        )}
+        {hasCurrentTeam(careers) && (
+          <Typography variant="body2" component="span" fontWeight="bold">
+            Bold: Current Team
+          </Typography>
+        )}
+      </Box>
       <Table size="small">
         <TableHead>
           <TableRow>

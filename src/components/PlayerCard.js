@@ -27,16 +27,6 @@ const PlayerCard = ({ player, playerScreen = false }) => {
     return `${feet} ft ${inches} in`;
   };
 
-  const generateTeamNames = () => {
-    return player.Careers.map((career) => {
-      let teamName = career.Team.name;
-      if (career.loan) {
-        teamName += ' (loan)';
-      }
-      return teamName;
-    }).join(', ');
-  };
-
   return (
     <Card sx={{ minWidth: 290, maxWidth: 380, margin: 2 }}>
       <CardActionArea>
@@ -83,12 +73,6 @@ const PlayerCard = ({ player, playerScreen = false }) => {
                   <TableCell>
                     {player.height + `m (${metersToFeetAndInches(player.height)})`}
                   </TableCell>
-                </TableRow>
-              )}
-              {player.Careers.length !== 0 && (
-                <TableRow>
-                  <TableCell variant="head">Current Team{player.Careers.length > 1 ? 's' : ''}</TableCell>
-                  <TableCell>{generateTeamNames()}</TableCell>
                 </TableRow>
               )}
               <TableRow>

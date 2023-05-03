@@ -36,8 +36,8 @@ const PlayerScreen = () => {
         });
 
         if (response.status === 200) {
-          setPlayer(response.data.player);
-          setCareer(response.data.career);
+          setPlayer(response.data);
+          setCareer(response.data.Careers);
         } else {
           console.error(`Response was not OK`);
         }

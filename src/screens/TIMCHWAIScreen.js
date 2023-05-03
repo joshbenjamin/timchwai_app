@@ -56,11 +56,10 @@ const TIMCHWAISCREEN = () => {
   const fetchLeagues = async () => {
     console.log('Fetching leagues for TIMCHWAI');
     try {
-        const response = await axiosInstance.get('/api/leagues/');
+        const response = await axiosInstance.get('/api/leagues_with_seasons/');
         if (response.status !== 200){
             console.error('Error');
         }
-        console.log(response);
         console.log(`Leagues:\n${JSON.stringify(response.data)}`);
         setLeagues(response.data);
     } catch (error) {
@@ -241,8 +240,8 @@ const TIMCHWAISCREEN = () => {
       });
 
       if (response.status === 200){
-        setPlayer(response.data.player);
-        setCareer(response.data.career);
+        setPlayer(response.data);
+        setCareer(response.data.Careers);
         setShowCareer(true);
         setShowPlayer(false);
         setShowFilters(false);
