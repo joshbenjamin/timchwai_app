@@ -271,31 +271,8 @@ const handleFilterButtonClick = async () => {
           <GeneratePlayerBar handleRandomPlayerButtonClick={handleRandomPlayerButtonClick} handleFilterButtonClick={handleFilterButtonClick} showFilters={showFilters} />
         )}
         <Box sx={{ flexGrow: 1, p: 1 }}>
-            {selectedTeams.length > 0 && (
-                <Container className='player'>                
-                  {loadingPlayer && (
-                      <LoadingAnimation />
-                  )}
 
-                  {player && showPlayer && (
-                      <Box
-                      sx={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                      }}
-                      >
-                        <PlayerCard player={player} />
-                      </Box>
-                  )}
-                </Container>
-            )}
-
-            {player && career && showCareer && !showPlayer && (
-              <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
-            )}
-
-            {leagues.length > 0 && showFilters && (
+        {leagues.length > 0 && showFilters && (
                 <Container className='leagues'>
                 <Typography variant="h4" component="h1" gutterBottom align="center">
                     Leagues
@@ -419,6 +396,30 @@ const handleFilterButtonClick = async () => {
 
             {teams.length === 0 && selectedLeagueSeasons.length > 0 && selectedLeagues.length > 0 && (
                 <LoadingAnimation />
+            )}
+            
+            {selectedTeams.length > 0 && (
+                <Container className='player'>                
+                  {loadingPlayer && (
+                      <LoadingAnimation />
+                  )}
+
+                  {player && showPlayer && (
+                      <Box
+                      sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                      }}
+                      >
+                        <PlayerCard player={player} />
+                      </Box>
+                  )}
+                </Container>
+            )}
+
+            {player && career && showCareer && !showPlayer && (
+              <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
             )}
 
             {career && showCareer && (

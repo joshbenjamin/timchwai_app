@@ -70,7 +70,7 @@ const PlayerSearchBar = ({ player, players, handleShowPlayer }) => {
     <div>
         <Collapse in={showHint}>
             <Typography variant="body1" sx={{ marginBottom: 1 }}>
-            Position{player.positions.length > 1 ? 's' : ''}: {player.positions.join(', ')}
+              Position{player.positions.length > 1 ? 's' : ''}: {player.positions.join(', ')}
             </Typography>
         </Collapse>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', maxHeight: '50vh', }}>
