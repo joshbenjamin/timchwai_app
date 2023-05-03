@@ -43,13 +43,13 @@ const PlayerCard = ({ player, playerScreen = false }) => {
           </Typography>
           <Table>
             <TableBody>
-              {player.full_name !== null && (
+              {player.full_name !== null && player.full_name !== '' && (
                 <TableRow>
                   <TableCell variant="head">Full Name</TableCell>
                   <TableCell>{player.full_name}</TableCell>
                 </TableRow>
               )}
-              {player.birth_place !== null && (
+              {player.birth_place !== null && player.birth_place !== '' && (
                 <TableRow>
                   <TableCell variant="head">Origin</TableCell>
                   <TableCell>{player.birth_place}</TableCell>
@@ -67,7 +67,7 @@ const PlayerCard = ({ player, playerScreen = false }) => {
                   {player.positions.join(', ')}
                 </TableCell>
               </TableRow>
-              {(player.height !== null || player.height !== 0) && (
+              {(player.height !== null && player.height !== 0) && (
                 <TableRow>
                   <TableCell variant="head">Height</TableCell>
                   <TableCell>
