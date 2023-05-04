@@ -58,21 +58,20 @@ const CareerTable = ({ careers }) => {
 
   return (
     <TableContainer component={Paper}>
-      <Box sx={{ mt: 2, mb: 1 }}>
+      <Box padding={1}>
         {hasLoan(careers) && (
-          <Typography variant="body2" component="span" fontStyle="italic">
-            Italics: Loan
-          </Typography>
-        )}
-        {hasLoan(careers) && hasCurrentTeam(careers) && (
-          <Typography variant="body2" component="span">
-            {' | '}
-          </Typography>
+          <Box display="block">
+            <Typography variant="body2" component="span" fontStyle="italic">
+              Italics = Loan
+            </Typography>
+          </Box>
         )}
         {hasCurrentTeam(careers) && (
-          <Typography variant="body2" component="span" fontWeight="bold">
-            Bold: Current Team
-          </Typography>
+          <Box display="block">
+            <Typography variant="body2" component="span" fontWeight="bold">
+              Bold = Current
+            </Typography>
+          </Box>
         )}
       </Box>
       <Table size="small">
