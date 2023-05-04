@@ -26,7 +26,7 @@ const Navbar = ({ players }) => {
       console.error(`No players to display!`);
     } else {
       return players.map(
-        (player) => `${player.name} (born ${new Date(player.birth_date).getFullYear()})`
+        (player) => `${player.name_basic} (born ${new Date(player.birth_date).getFullYear()})`
       )
     }
   };
@@ -38,13 +38,13 @@ const Navbar = ({ players }) => {
       return;
     }
   
-    const [name, birthYear] = value.split(' (born ');
+    const [name_basic, birthYear] = value.split(' (born ');
     const selectedPlayer = players.find((player) => {
       const playerBirthYear = player.birth_date
         ? new Date(player.birth_date).getFullYear()
         : null;
       return (
-        player.name === name &&
+        player.name_basic === name_basic &&
         (!birthYear || (playerBirthYear && playerBirthYear.toString() === birthYear.slice(0, -1)))
       );
     });
