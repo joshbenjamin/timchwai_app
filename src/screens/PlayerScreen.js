@@ -63,73 +63,74 @@ const PlayerScreen = () => {
 
   const onShowPlayer = async (val) => {
     setShowPlayer(val);
-  }
+  };
 
   if (!player || !players) {
     return (
       <div>
         <CssBaseline />
-        <Navbar players={players} />
+        <Navbar players={players}/>
         <Container maxWidth="lg">
           <LoadingAnimation />
         </Container>
       </div>
     );
+  } else {
+    return (
+      <div>
+          <CssBaseline />
+          <Navbar players={players} />
+          <Container maxWidth="lg">
+          {player && career && !showPlayer && (
+              <Container>
+                <Box sx={{ marginTop: 2 }} />
+  
+                <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
+  
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                  {!showPlayer && (
+                    <Link
+                      underline="hover"
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        setShowPlayer(true);
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
+                        Show Player
+                      </Typography>
+                    </Link>
+                  )}
+                </Box>
+              </Container>
+          )}
+              {showPlayer && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 2,
+                  }}
+                >
+                  <PlayerCard player={player} playerScreen={true} />
+                </Box>
+              )}
+              <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 2,
+                  }}
+                >
+                  <CareerTable careers={career} />
+                </Box>
+          </Container>    
+      </div>
+    );
   }
 
-  return (
-    <div>
-        <CssBaseline />
-        <Navbar players={players} />
-        <Container maxWidth="lg">
-        {player && career && !showPlayer && (
-            <Container>
-              <Box sx={{ marginTop: 2 }} />
-
-              <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
-
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                {!showPlayer && (
-                  <Link
-                    underline="hover"
-                    sx={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      setShowPlayer(true);
-                    }}
-                  >
-                    <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
-                      Show Player
-                    </Typography>
-                  </Link>
-                )}
-              </Box>
-            </Container>
-        )}
-            {showPlayer && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: 2,
-                }}
-              >
-                <PlayerCard player={player} playerScreen={true} />
-              </Box>
-            )}
-            <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: 2,
-                }}
-              >
-                <CareerTable careers={career} />
-              </Box>
-        </Container>    
-    </div>
-  );
 };
 
 export default PlayerScreen;

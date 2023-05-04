@@ -60,7 +60,7 @@ const TIMCHWAISCREEN = () => {
         if (response.status !== 200){
             console.error('Error');
         }
-        console.log(`Leagues:\n${JSON.stringify(response.data)}`);
+        // console.log(`Leagues:\n${JSON.stringify(response.data)}`);
         setLeagues(response.data);
     } catch (error) {
         console.error(`Error fetching leagues: ${error}`);
@@ -75,7 +75,7 @@ const TIMCHWAISCREEN = () => {
             leagueIds: selectedLeagues.join(','),
           },
         });
-        console.log(`League Seasons:\n${JSON.stringify(response.data)}`);
+        // console.log(`League Seasons:\n${JSON.stringify(response.data)}`);
         setLeagueSeasons(response.data);
       } catch (error) {
         console.error('Error fetching league seasons:', error);
@@ -92,7 +92,7 @@ const TIMCHWAISCREEN = () => {
             leagueSeasonIds: selectedLeagueSeasons.join(','),
           },
         });
-        console.log(`Teams:\n${JSON.stringify(response.data)}`);
+        // console.log(`Teams:\n${JSON.stringify(response.data)}`);
         setTeams(response.data);
       } catch (error) {
         console.error('Error fetching teams:', error);

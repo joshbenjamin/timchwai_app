@@ -62,14 +62,14 @@ const CareerTable = ({ careers }) => {
         {hasLoan(careers) && (
           <Box display="block">
             <Typography variant="body2" component="span" fontStyle="italic">
-              Italics = Loan
+              Italics - Loan
             </Typography>
           </Box>
         )}
         {hasCurrentTeam(careers) && (
           <Box display="block">
             <Typography variant="body2" component="span" fontWeight="bold">
-              Bold = Current
+              Bold - Current
             </Typography>
           </Box>
         )}

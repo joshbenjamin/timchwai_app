@@ -20,8 +20,8 @@ const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonCl
             justifyContent: 'center',
             alignItems: 'center',
             paddingY: 1,
-            marginBottom: 2,
-            marginTop: 2,
+            marginBottom: 1,
+            marginTop: 1,
             backgroundColor: 'white'
         }}
         >
@@ -29,9 +29,9 @@ const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonCl
                 variant="contained"
                 color="primary"
                 onClick={generateClick}
-                sx={{ mr: 3, whiteSpace: 'nowrap' }}
+                sx={{ mr: 1, whiteSpace: 'nowrap' }}
             >
-                Random Player
+                Get Random Player
             </Button>
             <Button
                 variant="contained"

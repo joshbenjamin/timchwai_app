@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ players }) => {
   const [showSearchBox, setShowSearchBox] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
@@ -55,6 +56,7 @@ const Navbar = ({ players }) => {
     }
   
     setShowSearchBox(false);
+
     navigate(`/player/${selectedPlayer.id}`);
   };  
 
