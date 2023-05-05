@@ -49,6 +49,7 @@ const TIMCHWAISCREEN = () => {
   const [loadingPlayer, setLoadingPlayer] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
 
   const leagueSeasonsRef = useRef(null);
   const teamsRef = useRef(null);
@@ -226,12 +227,13 @@ const TIMCHWAISCREEN = () => {
   }
 
   const handleRandomPlayerButtonClick = async () => {
-    // setPlayer({});
-    // setCareer({});
+    setPlayer({});
+    setCareer({});
     setShowPlayer(false);
     setShowCareer(false);
     setShowFilters(false);
     setLoadingPlayer(true);
+    setShowSearchBar(false);
 
     try {
       const response = await axiosInstance.get('/api/player_in_team_seasons', {
@@ -248,6 +250,7 @@ const TIMCHWAISCREEN = () => {
         setShowPlayer(false);
         setShowFilters(false);
         setLoadingPlayer(false);
+        setShowSearchBar(true);
       } else {
         console.error(`Response was not OK`)
       }
@@ -420,7 +423,7 @@ const handleFilterButtonClick = async () => {
                 </Container>
             )}
 
-            {player && players && (
+            {player && players && showSearchBar && (
               <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} modalVisible={modalVisible} setModalVisible={setModalVisible} />
             )}
 

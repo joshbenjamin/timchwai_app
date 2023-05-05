@@ -31,8 +31,14 @@ const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonCl
                 variant="contained"
                 color="primary"
                 onClick={generateClick}
-                sx={{ mr: 1, whiteSpace: 'nowrap', boxShadow: '0 2px 4px 2px rgba(0, 0, 0, .2)',
-              }}
+                sx={{ 
+                  mr: 1,
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 2px 4px 2px rgba(0, 0, 0, .2)',
+                  padding: '4px 8px',
+                  minHeight: '40px',
+                  fontSize: '1rem'
+                }}
             >
                 Get Random Player
             </Button>
@@ -40,7 +46,13 @@ const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonCl
                 variant="contained"
                 color="secondary"
                 onClick={filterClick}
-                sx={{ minWidth: 'max-content', boxShadow: '0 2px 4px 2px rgba(0, 0, 0, .2)' }}
+                sx={{ 
+                  minWidth: 'max-content',
+                  boxShadow: '0 2px 4px 2px rgba(0, 0, 0, .2)',
+                  padding: '4px 8px',
+                  minHeight: '40px',
+                  fontSize: '1rem'
+                }}
             >
                 {showFilters ? 'Hide Filters' : 'Show Filters'}
             </Button>

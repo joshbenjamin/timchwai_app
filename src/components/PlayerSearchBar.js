@@ -89,7 +89,7 @@ const PlayerSearchBar = ({ player, players, playerScreen = false, handleShowPlay
       },
       info: {
         title: 'Info',
-        message: 'This is an informational message.',
+        message: '',
         backgroundColor: '#ffffff',
         borderColor: '#ccc',
       },
