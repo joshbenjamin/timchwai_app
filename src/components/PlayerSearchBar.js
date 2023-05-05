@@ -64,8 +64,13 @@ const PlayerSearchBar = ({ player, players, playerScreen = false, handleShowPlay
   const handleGiveUp = () => {
     handleShowPlayer(true);
     setShowSearchBar(false);
-    setResult('info');
     setModalVisible(true);
+    setResult('info');
+  };
+
+  const onShowPlayer = () => {
+    handleShowPlayer(true);
+    setShowSearchBar(false);
   };
 
   const handleCloseModal = () => {
@@ -153,7 +158,7 @@ const PlayerSearchBar = ({ player, players, playerScreen = false, handleShowPlay
                 <Link
                   underline="hover"
                   sx={{ cursor: 'pointer' }}
-                  onClick={handleGiveUp}
+                  onClick={onShowPlayer}
                 >
                   <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
                     Show Player
