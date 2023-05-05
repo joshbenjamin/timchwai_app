@@ -9,9 +9,10 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import StyledModal from './StyledModal';
+import Link from '@mui/material/Link';
 
 
-const PlayerSearchBar = ({ player, players, handleShowPlayer, modalVisible, setModalVisible }) => {
+const PlayerSearchBar = ({ player, players, playerScreen = false, handleShowPlayer, modalVisible, setModalVisible }) => {
   const [showHint, setShowHint] = useState(false);
   const [showSearchBar, setShowSearchBar] = useState(true);
   const [inputValue, setInputValue] = useState('');
@@ -148,6 +149,19 @@ const PlayerSearchBar = ({ player, players, handleShowPlayer, modalVisible, setM
                 </Grid>
               </Grid>
             </Box>
+            {playerScreen && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                <Link
+                  underline="hover"
+                  sx={{ cursor: 'pointer' }}
+                  onClick={handleGiveUp}
+                >
+                  <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
+                    Show Player
+                  </Typography>
+                </Link>
+              </Box>
+            )}
           </div>
         )}
         <StyledModal

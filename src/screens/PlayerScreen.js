@@ -4,13 +4,11 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import PlayerCard from '../components/PlayerCard';
 import CareerTable from '../components/CareerTable';
 import Navbar from '../components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingAnimation from '../components/LoadingAnimation/LoadingAnimation';
-import Link from '@mui/material/Link';
 
 import PlayerSearchBar from '../components/PlayerSearchBar';
 import PlayerContext from '../components/PlayerContext';
@@ -93,27 +91,10 @@ const PlayerScreen = () => {
           <CssBaseline />
           <Navbar players={players} onPlayerSelect={handlePlayerSelect} />
           <Container maxWidth="lg">
-          {player && career && (
+          {player && players && (
               <Container>
                 <Box sx={{ marginTop: 2 }} />
-  
-                <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} modalVisible={modalVisible} setModalVisible={setModalVisible} />
-  
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                  {!showPlayer && (
-                    <Link
-                      underline="hover"
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        setShowPlayer(true);
-                      }}
-                    >
-                      <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 2 }}>
-                        Show Player
-                      </Typography>
-                    </Link>
-                  )}
-                </Box>
+                <PlayerSearchBar player={player} players={players} playerScreen={true} handleShowPlayer={onShowPlayer} modalVisible={modalVisible} setModalVisible={setModalVisible} />
               </Container>
           )}
               {showPlayer && (

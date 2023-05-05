@@ -48,6 +48,8 @@ const TIMCHWAISCREEN = () => {
   const [showCareer, setShowCareer] = useState(true);
   const [loadingPlayer, setLoadingPlayer] = useState(false);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const leagueSeasonsRef = useRef(null);
   const teamsRef = useRef(null);
 
@@ -224,8 +226,8 @@ const TIMCHWAISCREEN = () => {
   }
 
   const handleRandomPlayerButtonClick = async () => {
-    setPlayer({});
-    setCareer({});
+    // setPlayer({});
+    // setCareer({});
     setShowPlayer(false);
     setShowCareer(false);
     setShowFilters(false);
@@ -418,8 +420,8 @@ const handleFilterButtonClick = async () => {
                 </Container>
             )}
 
-            {player && career && showCareer && !showPlayer && (
-              <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
+            {player && players && (
+              <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} modalVisible={modalVisible} setModalVisible={setModalVisible} />
             )}
 
             {career && showCareer && (
