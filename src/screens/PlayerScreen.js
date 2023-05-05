@@ -72,6 +72,7 @@ const PlayerScreen = () => {
 
   const handlePlayerSelect = async () => {
     setIsLoading(true);
+    setShowPlayer(false);
   };
 
   if (!player || !players || isLoading) {
