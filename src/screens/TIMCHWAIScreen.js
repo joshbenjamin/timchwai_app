@@ -111,16 +111,30 @@ const TIMCHWAISCREEN = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedLeagueSeasons.length) {
-      fetchTeams(selectedLeagueSeasons);
-    }
-  }, [selectedLeagueSeasons, fetchTeams]);
-
-  useEffect(() => {
     if (selectedLeagues.length) {
       fetchLeagueSeasons(selectedLeagues);
+
+      if (selectedLeagues.length === leagues.length){
+        setSelectAllLeagues(true);
+      }
     }
-  }, [selectedLeagues, fetchLeagueSeasons]);
+  }, [selectedLeagues, fetchLeagueSeasons, leagues]);
+
+  useEffect(() => {
+    if (selectedLeagueSeasons.length) {
+      fetchTeams(selectedLeagueSeasons);
+
+      if (selectedLeagueSeasons.length === leagueSeasons.length){
+        setSelectAllLeagueSeasons(true);
+      }
+    }
+  }, [selectedLeagueSeasons, fetchTeams, leagueSeasons]);
+
+  useEffect(() => {
+    if (teams.length && selectedTeams.length === teams.length){
+      setSelectAllTeams(true);
+    }
+  }, [selectedTeams, teams]);
 
   // Select
 
