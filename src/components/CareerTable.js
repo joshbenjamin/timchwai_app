@@ -77,12 +77,12 @@ const CareerTable = ({ careers }) => {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell sx={{ py: 1 }}>Team</TableCell>
-            <TableCell sx={{ py: 1 }}>Name</TableCell>
-            <TableCell sx={{ py: 1 }}>Years</TableCell>
-            <TableCell sx={{ py: 1 }}>Apps</TableCell>
-            <TableCell sx={{ py: 1 }}>Goals</TableCell>
-          </TableRow>
+            <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>Team</TableCell>
+            <TableCell sx={{ py: 1, width: '35%', padding: '5px' }}>Name</TableCell>
+            <TableCell sx={{ py: 1, width: '20%', padding: '5px' }}>Years</TableCell>
+            <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>Apps</TableCell>
+            <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>Goals</TableCell>
+        </TableRow>
         </TableHead>
         <TableBody>
           {sortGroups(Object.keys(groupedCareers)).map((group) => {
@@ -96,7 +96,7 @@ const CareerTable = ({ careers }) => {
                 </TableRow>
                 {groupCareers.map((career) => (
                   <TableRow key={career.id}>
-                    <TableCell sx={{ py: 1 }}>
+                    <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>
                       {career.Team.image && (
                         <img
                           src={`${career.Team.image}?t_cache=public,max-age=31536000`}
@@ -107,15 +107,15 @@ const CareerTable = ({ careers }) => {
                         />
                       )}
                     </TableCell>
-                    <TableCell sx={{ py: 1, fontWeight: getFontWeight(career), fontStyle: getFontStyle(career) }}>{career.Team.name}</TableCell>
-                    <TableCell sx={{ py: 1 }}>
+                    <TableCell sx={{ py: 1, width: '35%', padding: '5px', fontWeight: getFontWeight(career), fontStyle: getFontStyle(career) }}>{career.Team.name}</TableCell>
+                    <TableCell sx={{ py: 1, width: '20%', padding: '5px' }}>
                       <Box whiteSpace="nowrap">
                         {career.from_year} -<br />
                         {career.to_year ? career.to_year : 'Present'}
                       </Box>
                     </TableCell>
-                    <TableCell sx={{ py: 1 }}>{career.apps}</TableCell>
-                    <TableCell sx={{ py: 1 }}>{career.goals}</TableCell>
+                    <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>{career.apps}</TableCell>
+                    <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>{career.goals}</TableCell>
                   </TableRow>
                 ))}
               </React.Fragment>
