@@ -23,6 +23,8 @@ const PlayerScreen = () => {
   const [career, setCareer] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [showHint, setShowHint] = useState(false);
 
   const players = useContext(PlayerContext);
@@ -91,11 +93,11 @@ const PlayerScreen = () => {
           <CssBaseline />
           <Navbar players={players} onPlayerSelect={handlePlayerSelect} />
           <Container maxWidth="lg">
-          {player && career && !showPlayer && (
+          {player && career && (
               <Container>
                 <Box sx={{ marginTop: 2 }} />
   
-                <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} />
+                <PlayerSearchBar player={player} players={players} handleShowPlayer={onShowPlayer} modalVisible={modalVisible} setModalVisible={setModalVisible} />
   
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                   {!showPlayer && (
