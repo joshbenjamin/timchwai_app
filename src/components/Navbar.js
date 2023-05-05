@@ -13,7 +13,7 @@ import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = ({ players }) => {
+const Navbar = ({ players, onPlayerSelect = () => {} }) => {
   const [showSearchBox, setShowSearchBox] = useState(false);
 
   const navigate = useNavigate();
@@ -56,6 +56,7 @@ const Navbar = ({ players }) => {
     }
   
     setShowSearchBox(false);
+    onPlayerSelect();
 
     navigate(`/player/${selectedPlayer.id}`);
   };  

@@ -21,6 +21,7 @@ const PlayerScreen = () => {
   const [player, setPlayer] = useState(null);
   const [showPlayer, setShowPlayer] = useState(false);
   const [career, setCareer] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showHint, setShowHint] = useState(false);
 
@@ -50,6 +51,10 @@ const PlayerScreen = () => {
   }, [playerId]);
 
   useEffect(() => {
+    setIsLoading(false);
+  }, [player]);
+
+  useEffect(() => {
     let timeout;
     if (showHint) {
       timeout = setTimeout(() => {
@@ -65,11 +70,15 @@ const PlayerScreen = () => {
     setShowPlayer(val);
   };
 
-  if (!player || !players) {
+  const handlePlayerSelect = async () => {
+    setIsLoading(true);
+  };
+
+  if (!player || !players || isLoading) {
     return (
       <div>
         <CssBaseline />
-        <Navbar players={players}/>
+        <Navbar players={players} onPlayerSelect={handlePlayerSelect}/>
         <Container maxWidth="lg">
           <LoadingAnimation />
         </Container>
@@ -79,7 +88,7 @@ const PlayerScreen = () => {
     return (
       <div>
           <CssBaseline />
-          <Navbar players={players} />
+          <Navbar players={players} onPlayerSelect={handlePlayerSelect} />
           <Container maxWidth="lg">
           {player && career && !showPlayer && (
               <Container>
