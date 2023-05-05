@@ -64,9 +64,8 @@ const PlayerSearchBar = ({ player, players, playerScreen = false, handleShowPlay
   const handleGiveUp = () => {
     handleShowPlayer(true);
     setShowSearchBar(false);
-    // Not going to display anything if give up
-    // setResult('info');
-    // setModalVisible(true);
+    setResult('info');
+    setModalVisible(true);
   };
 
   const handleCloseModal = () => {
@@ -88,8 +87,8 @@ const PlayerSearchBar = ({ player, players, playerScreen = false, handleShowPlay
         borderColor: '#f00',
       },
       info: {
-        title: 'Info',
-        message: '',
+        title: 'Answer',
+        message: `${player.name}`,
         backgroundColor: '#ffffff',
         borderColor: '#ccc',
       },
