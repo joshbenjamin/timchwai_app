@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 import TIMCHWAISCREEN from './screens/TIMCHWAIScreen';
 import PlayerScreen from './screens/PlayerScreen';
+import RandomScreen from './screens/RandomScreen';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Analytics />
       <Router>
         <Routes>
-          <Route index path="/" element={<TIMCHWAISCREEN />} />
+          <Route index path="/" element={<RandomScreen />} />
+          <Route index path="/filter" element={<TIMCHWAISCREEN />} />
           <Route path="/player/:playerId" element={<PlayerScreen />} />
         </Routes>
       </Router>

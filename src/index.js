@@ -9,11 +9,11 @@ import PlayerProvider from './components/PlayerProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <PlayerProvider>
-      <App />
-    </PlayerProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <PlayerProvider>
+    <App />
+  </PlayerProvider>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

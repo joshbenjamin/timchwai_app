@@ -2,7 +2,7 @@
 import React from 'react';
 import { AppBar, Box, Button } from '@mui/material';
 
-const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonClick, showFilters }) => {
+const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonClick, showFilters, randomScreen = false }) => {
 
   const generateClick = () => { 
     handleRandomPlayerButtonClick();
@@ -42,20 +42,23 @@ const GeneratePlayerBar = ({ handleRandomPlayerButtonClick, handleFilterButtonCl
             >
                 Get Random Player
             </Button>
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={filterClick}
-                sx={{ 
-                  minWidth: 'max-content',
-                  boxShadow: '0 2px 4px 2px rgba(0, 0, 0, .2)',
-                  padding: '4px 8px',
-                  minHeight: '40px',
-                  fontSize: '1rem'
-                }}
-            >
-                {showFilters ? 'Hide Filters' : 'Show Filters'}
-            </Button>
+
+            {!randomScreen && (
+              <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={filterClick}
+                  sx={{ 
+                    minWidth: 'max-content',
+                    boxShadow: '0 2px 4px 2px rgba(0, 0, 0, .2)',
+                    padding: '4px 8px',
+                    minHeight: '40px',
+                    fontSize: '1rem'
+                  }}
+              >
+                  {showFilters ? 'Hide Filters' : 'Show Filters'}
+              </Button>
+            )}
         </Box>
     </AppBar>
   );
