@@ -24,7 +24,9 @@ const LeagueSeasonCard = ({ leagueSeason, onLeagueSeasonClick, isSelected }) => 
             {leagueSeason.League.name}
           </Typography>
           <Typography variant="body" color="text.secondary">
-            {leagueSeason.from_year} - {leagueSeason.to_year}
+            {leagueSeason.from_year === leagueSeason.to_year
+              ? leagueSeason.from_year
+              : `${leagueSeason.from_year} - ${leagueSeason.to_year}`}
           </Typography>
         </CardContent>
       </CardActionArea>
