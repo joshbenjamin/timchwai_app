@@ -8,18 +8,29 @@ import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 import Paper from '@mui/material/Paper';
 import { Autocomplete } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ players, onPlayerSelect = () => {} }) => {
   const [showSearchBox, setShowSearchBox] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
     setShowSearchBox(!showSearchBox);
+  };
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
   const getNames = () => {
@@ -31,14 +42,13 @@ const Navbar = ({ players, onPlayerSelect = () => {} }) => {
       )
     }
   };
-  
 
   const handlePlayerSelect = (event, value) => {
     if (!value) {
       console.error('No player selected');
       return;
     }
-  
+
     const [name_basic, birthYear] = value.split(' (born ');
     const selectedPlayer = players.find((player) => {
       const playerBirthYear = player.birth_date
@@ -49,24 +59,58 @@ const Navbar = ({ players, onPlayerSelect = () => {} }) => {
         (!birthYear || (playerBirthYear && playerBirthYear.toString() === birthYear.slice(0, -1)))
       );
     });
-  
+
     if (!selectedPlayer) {
       console.error(`Player not found: ${value}`);
       return;
     }
-  
+
     setShowSearchBox(false);
     onPlayerSelect();
 
     navigate(`/player/${selectedPlayer.id}`);
-  };  
+  };
+
+  const drawerItems = (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={handleDrawerToggle}
+      onKeyDown={handleDrawerToggle}
+    >
+      <List>
+        <ListItem component={Link} to="/filter">
+          <ListItemText primary="Filter" />
+        </ListItem>
+        <Divider />
+        <ListItem component={Link} to="/">
+          <ListItemText primary="Random Player" />
+        </ListItem>
+        <Divider />
+        <ListItem component={Link} to="/Euro2024">
+          <ListItemText primary="Random Euro 2024" />
+        </ListItem>
+      </List>
+    </Box>
+  );
 
   return (
     <>
       <AppBar position="static">
         <Toolbar>
           <Grid container>
-            <Grid item xs={1} />
+          <Grid item xs={1}>
+              <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={handleDrawerToggle}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Box>
+            </Grid>
             <Grid item xs={10}>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -108,6 +152,13 @@ const Navbar = ({ players, onPlayerSelect = () => {} }) => {
           />
         </Paper>
       )}
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={handleDrawerToggle}
+      >
+        {drawerItems}
+      </Drawer>
     </>
   );
 };
