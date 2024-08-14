@@ -2,9 +2,7 @@
 
 import axios from 'axios';
 
-const API_URL = process.env.API_URL;
-
-console.log(API_URL);
+const API_URL = process.env.API_URL || "https://api.timchwai.co.za";
 
 const axiosInstance = axios.create({
   baseURL: `${API_URL}`, // Replace with your backend base URL
