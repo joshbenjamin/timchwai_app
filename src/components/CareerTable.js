@@ -109,10 +109,12 @@ const CareerTable = ({ careers }) => {
                     </TableCell>
                     <TableCell sx={{ py: 1, width: '35%', padding: '5px', fontWeight: getFontWeight(career), fontStyle: getFontStyle(career) }}>{career.Team.name}</TableCell>
                     <TableCell sx={{ py: 1, width: '20%', padding: '5px' }}>
-                      <Box whiteSpace="nowrap">
-                        {career.from_year} -<br />
-                        {career.to_year ? career.to_year : 'Present'}
-                      </Box>
+                      {career.from_year !== 0 && (
+                        <Box whiteSpace="nowrap">
+                          {career.from_year} -<br />
+                          {career.to_year ? career.to_year : 'Present'}
+                        </Box>
+                      )}
                     </TableCell>
                     <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>{career.apps}</TableCell>
                     <TableCell sx={{ py: 1, width: '15%', padding: '5px' }}>{career.goals}</TableCell>
