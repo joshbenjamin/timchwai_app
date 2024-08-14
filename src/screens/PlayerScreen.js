@@ -30,7 +30,7 @@ const PlayerScreen = () => {
   useEffect(() => {
     const fetchPlayerData = async () => {
       try {
-        const response = await axiosInstance.get('/api/player', {
+        const response = await axiosInstance.get('/player', {
           params: {
             playerId,
           },

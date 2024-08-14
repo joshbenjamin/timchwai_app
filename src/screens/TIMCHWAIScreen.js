@@ -59,7 +59,7 @@ const TIMCHWAISCREEN = () => {
   const fetchLeagues = async () => {
     console.log('Fetching leagues for TIMCHWAI');
     try {
-        const response = await axiosInstance.get('/api/leagues_with_seasons/');
+        const response = await axiosInstance.get('/leagues_with_seasons');
         if (response.status !== 200){
             console.error('Error');
         }
@@ -73,7 +73,7 @@ const TIMCHWAISCREEN = () => {
   const fetchLeagueSeasons = useCallback(
     async (selectedLeagues) => {
       try {
-        const response = await axiosInstance.get('/api/league_seasons', {
+        const response = await axiosInstance.get('/league_seasons', {
           params: {
             leagueIds: selectedLeagues.join(','),
           },
@@ -90,7 +90,7 @@ const TIMCHWAISCREEN = () => {
   const fetchTeams = useCallback(
     async (selectedLeagueSeasons) => {
       try {
-        const response = await axiosInstance.get('/api/teams_in_seasons', {
+        const response = await axiosInstance.get('/teams_in_seasons', {
           params: {
             leagueSeasonIds: selectedLeagueSeasons.join(','),
           },
@@ -250,7 +250,7 @@ const TIMCHWAISCREEN = () => {
     setShowSearchBar(false);
 
     try {
-      const response = await axiosInstance.get('/api/player_in_team_seasons', {
+      const response = await axiosInstance.get('/player_in_team_seasons', {
           params: {
               leagueSeasonIds: selectedLeagueSeasons.join(','),
               teamIds: selectedTeams.join(','),

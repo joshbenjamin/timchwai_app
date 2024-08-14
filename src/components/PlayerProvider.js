@@ -13,7 +13,7 @@ const PlayerProvider = ({ children }) => {
       if (storedPlayers) {
         setPlayers(JSON.parse(storedPlayers));
       } else {
-        const response = await axiosInstance.get('/api/players/');
+        const response = await axiosInstance.get('/players');
         const players = response.data;
         setPlayers(players);
         localStorage.setItem('players', JSON.stringify(players));

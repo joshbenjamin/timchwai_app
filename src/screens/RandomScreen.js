@@ -38,7 +38,7 @@ const RandomScreen = () => {
     setShowAnimation(true);
 
     try {
-      const response = await axiosInstance.get('/api/random_player');
+      const response = await axiosInstance.get('/random_player');
       if (response.status === 200) {
         setPlayer(response.data);
         setCareer(response.data.Careers);

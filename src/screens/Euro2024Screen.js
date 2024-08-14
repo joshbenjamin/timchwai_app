@@ -38,7 +38,7 @@ const Euro2024Screen = () => {
     setShowAnimation(true);
 
     try {
-      const response = await axiosInstance.get('/api/random_euros_2024');
+      const response = await axiosInstance.get('/random_euros_2024');
       if (response.status === 200) {
         setPlayer(response.data);
         setCareer(response.data.Careers);
